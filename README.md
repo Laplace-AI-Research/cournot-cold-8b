@@ -28,6 +28,8 @@ text alone** — no retrieval, no news, no market price.
 
 LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 
+![Cournot Prior 8B architecture](assets/architecture.svg)
+
 ---
 
 ## The headline number
