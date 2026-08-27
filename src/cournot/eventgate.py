@@ -47,7 +47,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import StrEnum
 
-from pari.types import Outcome
+from cournot.types import Outcome
 
 #: Two-sided 95%.
 DEFAULT_Z = 1.96

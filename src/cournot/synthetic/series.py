@@ -12,7 +12,7 @@ needs no credential. The interface is the same either way; the vintage question 
 a property of the source, declared by the source.
 
 **Bridging to evidence** is where the leakage guarantee is cashed. The series
-becomes `EvidenceDoc`s and goes through `pari.leakage.screen_bundle` — the same
+becomes `EvidenceDoc`s and goes through `cournot.leakage.screen_bundle` — the same
 detector every other evidence path uses. Writing a second truncation here would
 have been shorter and would have created exactly the thing `CLAUDE.md` #1 exists
 to prevent: two implementations of "before `as_of`", one of them untested.
@@ -28,14 +28,14 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Protocol
 
-from pari.leakage import (
+from cournot.leakage import (
     DEFAULT_TRUST_REGISTRY,
     LeakageReport,
     SourceTrustRegistry,
     screen_bundle,
 )
-from pari.synthetic.generator import ObservationPoint, SeriesQuestion
-from pari.types import EvidenceDoc, TimestampProvenance
+from cournot.synthetic.generator import ObservationPoint, SeriesQuestion
+from cournot.types import EvidenceDoc, TimestampProvenance
 
 __all__ = [
     "CsvSeriesSource",

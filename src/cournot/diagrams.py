@@ -1,15 +1,15 @@
 """Reliability diagrams as self-contained SVG. `docs/07`: "Publish these."
 
-    svg = reliability_diagram(ece.equal_mass, title="Pari Prior — published")
+    svg = reliability_diagram(ece.equal_mass, title="Cournot Prior — published")
     Path("reliability.svg").write_text(svg)
 
-No plotting dependency, matching `pari.metrics`, which is pure Python for the same
+No plotting dependency, matching `cournot.metrics`, which is pure Python for the same
 reason: these inputs are eval-sized and a readable artifact is worth more than
 speed. The output is a deterministic string, which is also what makes it testable.
 
 **The diagram shows bin counts, and that is not decoration.** A bin holding three
 questions plots identically to one holding three thousand, and the eye reads a
-wobble in a three-question bin as miscalibration. `pari.metrics` already tracks
+wobble in a three-question bin as miscalibration. `cournot.metrics` already tracks
 `smallest_populated_bin` because of this; a diagram that drops the counts throws
 away the warning. Marker area is proportional to `n`, and a count strip under the
 plot gives the numbers outright.
@@ -27,7 +27,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from xml.sax.saxutils import escape, quoteattr
 
-from pari.metrics import Bin, ECEBinned
+from cournot.metrics import Bin, ECEBinned
 
 __all__ = ["DiagramGeometry", "reliability_diagram"]
 

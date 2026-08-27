@@ -3,11 +3,11 @@
     manifest = build_manifest(
         model_hash=hash_file(weights),
         data_snapshot_hash=hash_file(eval_set),
-        label="pari-prior-v1",
+        label="cournot-prior-v1",
     )
     card = certify(model_card_metrics(slice_), manifest)
 
-`pari.splits` already refuses to build a card-bound artifact from `dev`. That
+`cournot.splits` already refuses to build a card-bound artifact from `dev`. That
 guard answers *which questions*; it says nothing about *which model*, *which
 data*, or *which code* produced the number. A `published` slice scored by an
 unknown checkpoint against an unrecorded snapshot is exactly as uncitable as a
@@ -32,8 +32,8 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
-from pari.leakage import LEAKAGE_DETECTOR_VERSION
-from pari.splits import CardMetrics, Split
+from cournot.leakage import LEAKAGE_DETECTOR_VERSION
+from cournot.splits import CardMetrics, Split
 
 __all__ = [
     "CertifiedCard",

@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 
-from pari.metrics import (
+from cournot.metrics import (
     Binning,
     BrierDecomposition,
     ECEResult,
@@ -35,7 +35,7 @@ from pari.metrics import (
     log_score,
     output_histogram,
 )
-from pari.types import QuestionRecord
+from cournot.types import QuestionRecord
 
 __all__ = [
     "DEV_START",
@@ -170,7 +170,7 @@ class TemporalSplit:
 
         A question whose `resolved_at` is exactly the freeze instant goes to the
         training side (`dev`), not to `published`. Same asymmetry as the
-        `timestamp == as_of` boundary in `pari.leakage`: resolution times are
+        `timestamp == as_of` boundary in `cournot.leakage`: resolution times are
         routinely recorded at day granularity, so an exactly-equal timestamp
         usually means "some time on freeze day", part of which is before the
         freeze. `published` is the split whose whole value is the claim that
@@ -235,7 +235,7 @@ def forecast_horizon(record: QuestionRecord, as_of: datetime) -> timedelta:
         raise ValueError(
             f"as_of {as_of.isoformat()} is at or after resolved_at "
             f"{record.resolved_at.isoformat()} for {record.question_id}; that is not "
-            "a forecast (see pari.leakage.check_forecast_time)"
+            "a forecast (see cournot.leakage.check_forecast_time)"
         )
     return record.resolved_at - as_of
 

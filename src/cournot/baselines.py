@@ -25,8 +25,8 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 
-from pari.splits import DEFAULT_SPLIT, TemporalSplit
-from pari.types import QuestionRecord
+from cournot.splits import DEFAULT_SPLIT, TemporalSplit
+from cournot.types import QuestionRecord
 
 __all__ = [
     "ALWAYS_HALF_BRIER",

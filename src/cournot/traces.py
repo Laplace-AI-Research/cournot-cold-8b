@@ -55,7 +55,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Generic, Protocol, TypeVar
 
-from pari.types import Outcome
+from cournot.types import Outcome
 
 
 class TraceClass(StrEnum):

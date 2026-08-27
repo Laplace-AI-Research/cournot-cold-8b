@@ -1,4 +1,4 @@
-"""Scoring metrics for Pari.
+"""Scoring metrics for Cournot.
 
 `docs/07`. The shapes here encode two non-negotiables from `CLAUDE.md`:
 

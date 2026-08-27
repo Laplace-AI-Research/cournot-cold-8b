@@ -1,10 +1,10 @@
-"""Pari — a conditional probability estimator.
+"""Cournot — a conditional probability estimator.
 
 Phase 1 surface: types, the leakage detector, and metrics. Per `CLAUDE.md`
 build order, no data loaders, model code, or training code exist yet.
 """
 
-from pari.types import (
+from cournot.types import (
     EvidenceDoc,
     ForecastRequest,
     ForecastResponse,

@@ -6,11 +6,11 @@ library_name: peft
 pipeline_tag: text-classification
 tags: [forecasting, calibration, prediction-markets, brier-score, lora]
 model-index:
-  - name: pari-prior-8b
+  - name: cournot-prior-8b
     results:
       - task: {type: forecasting, name: Binary event forecasting}
         dataset:
-          name: Pari published split (Manifold, resolved after 2026-08-15 freeze)
+          name: Cournot published split (Manifold, resolved after 2026-08-15 freeze)
           type: manifold-published
         metrics:
           - {type: brier, value: 0.1800, name: Brier score}
@@ -19,7 +19,7 @@ model-index:
           - {type: ece, value: 0.1037, name: ECE (equal-width, 10 bins)}
 ---
 
-# Pari Prior 8B
+# Cournot Prior 8B
 
 A **calibrated probability estimator** for binary questions about future events.
 Given a question, its resolution criteria, its scheduled resolution date and an
@@ -281,13 +281,13 @@ split id and git SHA. Numbers without a manifest are not comparable.
 | `verify.py` | recomputes every headline number from the shipped forecasts |
 | `eval/` | the evaluation splits behind every claim |
 | `forecasts/` | this model's raw outputs, including the Polymarket transfer failure |
-| `src/pari/`, `scripts/` | the metric and scoring code |
+| `src/cournot/`, `scripts/` | the metric and scoring code |
 
 **Weights are not in this repository.** The LoRA adapter is 349 MB and belongs on
 the Hugging Face Hub, not in git.
 
 **The research record — every experiment, including the arms that failed — is in
-[`Laplace-AI-Research/pari-research`](https://github.com/Laplace-AI-Research/pari-research).**
+[`Laplace-AI-Research/cournot-research`](https://github.com/Laplace-AI-Research/cournot-research).**
 This repository is the artifact; that one is how it was arrived at.
 
 ---

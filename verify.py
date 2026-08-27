@@ -2,13 +2,13 @@
 
     uv run python verify.py
 
-Requires only `src/pari` — no model, no GPU. If a number here disagrees with the
+Requires only `src/cournot` — no model, no GPU. If a number here disagrees with the
 model card, the model card is wrong.
 """
 from __future__ import annotations
 import json, statistics, sys, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "src"))
-from pari.metrics import brier, ece, output_histogram
+from cournot.metrics import brier, ece, output_histogram
 
 def load(p):
     out = {}
@@ -37,7 +37,7 @@ def report(label, eval_path, run_path):
     return d
 
 if __name__ == "__main__":
-    print("Pari Prior 8B — verifying the model card's numbers")
+    print("Cournot Prior 8B — verifying the model card's numbers")
     pub = report("PUBLISHED (headline, contamination-free)", "eval/published_eval.json", "forecasts/published.jsonl")
     report("DEV (iteration only)", "eval/bakeoff_3000.json", "forecasts/scalar_tfull.jsonl")
     print("\nOUT-OF-VENUE TRANSFER (Polymarket) — the model card's weakness #1")

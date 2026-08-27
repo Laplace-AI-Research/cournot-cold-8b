@@ -28,7 +28,7 @@ from datetime import datetime, timedelta
 from enum import StrEnum
 from itertools import pairwise
 
-from pari.types import Probability
+from cournot.types import Probability
 
 __all__ = [
     "LookAheadError",

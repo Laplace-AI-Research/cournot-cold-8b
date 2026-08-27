@@ -1,4 +1,4 @@
-# Datasheet — Pari Prior training and evaluation corpora
+# Datasheet — Cournot Prior training and evaluation corpora
 
 Follows Gebru et al., *Datasheets for Datasets* (arXiv:1803.09010). Published in
 place of the raw corpus, which is **not redistributed** — see Distribution.
@@ -68,7 +68,7 @@ cutoff is not.
 
 ## Uses
 
-Used to train and evaluate Pari Prior 8B. Not suitable for: studying Manifold
+Used to train and evaluate Cournot Prior 8B. Not suitable for: studying Manifold
 users or trading behaviour (no user data retained); any claim about venues other
 than Manifold (transfer fails — see the model card); mechanical threshold or
 counting questions.
@@ -86,4 +86,4 @@ corpus is not.
 `published` accumulates forward as questions resolve. Its statistics will move,
 and the model card's headline is expected to be re-derived rather than frozen.
 Corrections and retractions are recorded in the research repository's decisions
-log, `Laplace-AI-Research/pari-research`.
+log, `Laplace-AI-Research/cournot-research`.

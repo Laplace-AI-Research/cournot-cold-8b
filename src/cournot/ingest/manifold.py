@@ -34,7 +34,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from pari.types import QuestionRecord, SoftTargetProvenance
+from cournot.types import QuestionRecord, SoftTargetProvenance
 
 __all__ = [
     "SOURCE",
