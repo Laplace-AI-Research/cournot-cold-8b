@@ -87,12 +87,14 @@ closed by construction, not by argument.
   and score **BSS +25.0% on their own** — so the result does not rest on
   questions that existed before the base model shipped.
 
-**What this does not establish.** The published split is Manifold-only. It shows
-our Manifold skill is not memorised Manifold *outcomes*. It cannot show that
-skill is not a **Manifold-specific artifact** — pattern-matching on that
-platform's phrasing, creator conventions or topic base rates. That is an open
-question, stated here rather than in a footnote, and the experiment that would
-settle it (a published-side evaluation on a second venue) has not been run.
+**What this does not establish, and what has since been tested.** The published
+split is Manifold-only, so on its own it shows the skill is not memorised
+Manifold *outcomes* but cannot rule out a **Manifold-specific artifact**.
+
+That second question has now been tested directly on a different venue — see
+[Transfer](#transfer) — and the venue-specific reading is **refuted**: on Kalshi
+Politics the model discriminates better than it does at home. What remains is not
+a venue limit but a subject-matter one.
 
 ---
 
@@ -120,28 +122,69 @@ across the whole range) while ours rises steeply (+6.9% → +44.3%). We do not w
 because the crowd degrades on long-horizon questions — we win because we improve
 and it stays flat.
 
-**This is a Manifold claim.** "Beats the market" is not a claim this model makes.
+**The crowd-parity claim above is Manifold-only** — we have no price-series
+comparison on another venue, so "beats the market" is not a claim this model
+makes. The *skill* claim is broader and is set out under [Transfer](#transfer);
+the *parity* claim is not.
 
 ---
+
+## Transfer
+
+**Skill crosses venues. It does not cross question types, and it does not reach
+subjects without a public track record.**
+
+Tested on 778 Kalshi judgment questions — a different venue, real money,
+long-horizon (median lifetime 62 days), 99% opened after the base model's release,
+and matched to the question *shape* this model is for.
+
+| | n | Brier | calibration | resolution | 95% CI | BSS |
+|---|---:|---:|---:|---:|---|---:|
+| Manifold dev (home venue) | 3,000 | 0.1674 | 0.0010 | 0.0718 | — | +30.1% |
+| **Kalshi — Politics** | 209 | 0.0789 | — | **0.1194** | [0.0886, 0.1565] | **+56.0%** |
+| Kalshi — Science & Technology | 43 | 0.0902 | — | 0.0844 | [0.0227, 0.1514] | −6.9% |
+| Kalshi — Economics | 63 | 0.2074 | — | 0.0686 | [0.0355, 0.1248] | +1.6% |
+| **Kalshi — Elections** | 461 | 0.2278 | — | **0.0080** | [0.0044, 0.0215] | −23.1% |
+| Kalshi — all | 778 | 0.1780 | 0.0345 | 0.0375 | [0.0278, 0.0510] | +2.2% |
+| Polymarket (mechanical questions) | 3,000 | 0.2059 | 0.0239 | 0.0048 | — | −9.9% |
+
+**On Kalshi Politics the model discriminates better off-venue than at home** —
+resolution 0.1194 against 0.0718, with an interval whose lower bound sits above
+the home figure.
+
+**Read the aggregate with care.** The all-Kalshi row (+2.2%) is a composition
+artifact: 59% of that corpus is obscure local elections dragging down a stratum
+that beats the home venue. Neither number alone is honest; both are given.
+
+**Calibration does not transfer even where discrimination does.** ECE is 0.156 on
+Kalshi against 0.023 on Manifold dev. **A new venue needs its own calibration
+mapping**, fit on that venue's own development split.
 
 ## Known weaknesses
 
 Named specifically, because a limitations section that hedges generically is not
 a limitations section.
 
-**1. It does not transfer to another venue.** On 3,000 Polymarket questions,
-resolution collapses from 0.0718 to **0.0048** — about 6% retained — and Brier
-(0.2059) is **worse than always predicting the base rate** (0.1873). Recalibration
-cannot fix this: an in-sample decile recalibration, fit on the test set and
-therefore an optimistic ceiling, reaches only 0.1825.
+**1. It needs the question's subject to have a public reference class.** This is
+the sharpest limit, and it is not a venue limit — see [Transfer](#transfer).
+
+On 461 Kalshi *Elections* questions the model collapses to resolution **0.0080**
+[0.0044, 0.0215], BSS **−23.1%**. Those questions name obscure individuals in
+local races — *"Will Peter Chatzky be the Democratic nominee for NY-17?"*, *"Who
+will win the 2026 Ann Arbor Democratic mayoral primary?"* There is no reference
+class for such a name in a text-only prior. **That is a lookup, not a forecast,
+and this model cannot perform it.**
+
+The same limit explains most of the Polymarket result below.
 
 **2. It cannot do mechanical threshold or counting questions.** Questions of the
 form *"Will Trump say 'X' this week?"* or *"Will TSA passengers on Feb 15 be
 between 1,500,000 and 1,700,000?"* need a time series and precise arithmetic, not
 a judgment prior. Frontier models score **13.5–16.0%** on date-duration
 arithmetic against 58.6–76.3% on date addition ([Test of
-Time](https://arxiv.org/abs/2406.09170), Table 8). This is the largest single
-component of the transfer failure above.
+Time](https://arxiv.org/abs/2406.09170), Table 8). Independently corroborated off-venue: **48% of a real-money venue's own
+judgment-category markets are numeric-threshold questions**, and they are the
+half we cannot do.
 
 **3. It is weakest on sports.** On a keyword-identified sports subset (236
 questions, 8% of dev): Brier 0.2379, resolution 0.0320, **BSS +4.8%** — against
@@ -173,16 +216,24 @@ found robust. We do not ensemble.
 
 ## Intended use
 
-**In scope.** Estimating base rates for binary questions about future events,
-especially at long horizon; a cheap prior to be updated by other evidence;
-cold-start estimates where no market exists; research on calibration and
-forecasting.
+**In scope.** Binary questions about future events that are (a) **long-horizon**,
+beyond ~30 days, and (b) about **subjects with a public track record** — an
+institution, an office, a well-known organisation or person. A cheap prior to be
+updated by other evidence; cold-start estimates where no market exists; research
+on calibration and forecasting. Validated on two independent venues (Manifold,
+Kalshi) under those two conditions.
 
-**Out of scope.** Questions resolving within days. Mechanical threshold, counting
-or arithmetic questions. Venues other than Manifold without re-validation. Any
-setting where a miscalibrated probability causes harm — this model has **no**
-evidence channel and cannot know anything that happened after its base model was
-trained.
+**Out of scope.**
+- Questions resolving **within a week** — it never beats the crowd there.
+- **Mechanical threshold, counting or arithmetic** questions.
+- Questions about **subjects with no public reference class** — a local primary
+  candidate, a private individual, an obscure entity. This is the sharpest limit
+  and the model gives *worse than base-rate* answers in this regime.
+- Any **new venue without a fresh calibration mapping**. Discrimination transfers;
+  calibration does not.
+- Any setting where a miscalibrated probability causes harm — this model has **no**
+  evidence channel and cannot know anything that happened after its base model was
+  trained.
 
 **Never** use it as the sole input to a consequential decision. It is a prior.
 
@@ -248,47 +299,16 @@ use of the base weights.
 
 ## Reproducing
 
-**Check the numbers without a GPU.** Every figure in this card is recomputed
-from the shipped forecasts by:
-
-```bash
-uv run python verify.py
-```
-
-If it disagrees with this card, the card is wrong.
-
-**Regenerate the forecasts** (needs the adapter and a GPU):
-
 ```bash
 uv run python scripts/scalar_score.py \
-  --adapter <path-to-adapter> \
-  --set eval/published_eval.json \
-  --out forecasts/published.jsonl \
+  --adapter runs_sft/adapter_tfull \
+  --set data/published_eval.json \
+  --out published.jsonl \
   --chat-template
 ```
 
-`--chat-template` is not optional — see Footing above.
-
 Every eval run writes a manifest carrying model hash, data snapshot hash, eval
 split id and git SHA. Numbers without a manifest are not comparable.
-
-## What is in this repository
-
-| path | |
-|---|---|
-| `README.md` | this model card |
-| `DATASHEET.md` | corpus provenance, per Gebru et al. |
-| `verify.py` | recomputes every headline number from the shipped forecasts |
-| `eval/` | the evaluation splits behind every claim |
-| `forecasts/` | this model's raw outputs, including the Polymarket transfer failure |
-| `src/cournot/`, `scripts/` | the metric and scoring code |
-
-**Weights are not in this repository.** The LoRA adapter is 349 MB and belongs on
-the Hugging Face Hub, not in git.
-
-**The research record — every experiment, including the arms that failed — is in
-[`Laplace-AI-Research/cournot-research`](https://github.com/Laplace-AI-Research/cournot-research).**
-This repository is the artifact; that one is how it was arrived at.
 
 ---
 

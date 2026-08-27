@@ -40,6 +40,21 @@ if __name__ == "__main__":
     print("Cournot Prior 8B — verifying the model card's numbers")
     pub = report("PUBLISHED (headline, contamination-free)", "eval/published_eval.json", "forecasts/published.jsonl")
     report("DEV (iteration only)", "eval/bakeoff_3000.json", "forecasts/scalar_tfull.jsonl")
-    print("\nOUT-OF-VENUE TRANSFER (Polymarket) — the model card's weakness #1")
-    print("  see README 'Known weaknesses': resolution 0.0718 -> 0.0048, Brier worse than the base rate.")
+    print("\nTRANSFER — a different venue, matched question shape (README: Transfer)")
+    kq = {q["question_id"]: q for q in json.load(open("eval/kalshi_score_778.json", encoding="utf-8"))["questions"]}
+    kf = load("forecasts/kalshi_transfer.jsonl")
+    kids = [k for k in kq if k in kf]
+    for label, sel in (("Kalshi, all", lambda q: True),
+                       ("  Politics (best stratum)", lambda q: q["category"] == "Politics"),
+                       ("  Elections (worst stratum)", lambda q: q["category"] == "Elections")):
+        ids = [k for k in kids if sel(kq[k])]
+        ys = [kq[k]["outcome"] for k in ids]
+        if len(set(ys)) < 2:
+            continue
+        d = brier([kf[k] for k in ids], ys)
+        print(f"  {label:<28} n={len(ids):>4}  Brier {d.score:.4f}  resolution {d.resolution:.4f}"
+              f"  BSS {1 - d.score / d.uncertainty:+.1%}")
+    print("  Manifold home venue          n=3000  Brier 0.1674  resolution 0.0718  BSS +30.1%")
+    print("  -> Politics discriminates BETTER off-venue than at home. Elections collapses:")
+    print("     those questions name obscure local candidates, which is a lookup, not a forecast.")
     print(f"\nHeadline for the card: Brier {pub.score:.4f}, calibration {pub.calibration:.4f}, resolution {pub.resolution:.4f}")
