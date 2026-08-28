@@ -1,6 +1,6 @@
 """Reliability diagrams as self-contained SVG. `docs/07`: "Publish these."
 
-    svg = reliability_diagram(ece.equal_mass, title="Cournot Prior — published")
+    svg = reliability_diagram(ece.equal_mass, title="Cournot-Cold 8B — published")
     Path("reliability.svg").write_text(svg)
 
 No plotting dependency, matching `cournot.metrics`, which is pure Python for the same

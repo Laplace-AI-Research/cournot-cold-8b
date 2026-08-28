@@ -3,7 +3,7 @@
     manifest = build_manifest(
         model_hash=hash_file(weights),
         data_snapshot_hash=hash_file(eval_set),
-        label="cournot-prior-v1",
+        label="cournot-cold-v1",
     )
     card = certify(model_card_metrics(slice_), manifest)
 

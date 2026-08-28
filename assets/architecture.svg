@@ -119,6 +119,6 @@
 <text x="496" y="1174" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="400" fill="#B85450" text-anchor="start">needs the opposite convention.</text>
 <line x1="360.0" y1="578" x2="470" y2="920" stroke="#888" stroke-width="1.6" stroke-dasharray="5,5"/>
 <text x="1854" y="74" font-family="Helvetica,Arial,sans-serif" font-size="46" font-weight="600" fill="#1a1a1a" text-anchor="end">Cournot</text>
-<text x="1854" y="108" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#6C8EBF" text-anchor="end">Prior 8B</text>
+<text x="1854" y="108" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#6C8EBF" text-anchor="end">Cold 8B</text>
 <text x="1854" y="140" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="400" fill="#777" text-anchor="end">Qwen3-8B + LoRA + scalar head</text>
 </svg>

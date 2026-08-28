@@ -37,7 +37,7 @@ def report(label, eval_path, run_path):
     return d
 
 if __name__ == "__main__":
-    print("Cournot Prior 8B — verifying the model card's numbers")
+    print("Cournot-Cold 8B — verifying the model card's numbers")
     pub = report("PUBLISHED (headline, contamination-free)", "eval/published_eval.json", "forecasts/published.jsonl")
     report("DEV (iteration only)", "eval/bakeoff_3000.json", "forecasts/scalar_tfull.jsonl")
     print("\nTRANSFER — a different venue, matched question shape (README: Transfer)")

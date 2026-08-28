@@ -1,4 +1,4 @@
-"""LoRA SFT for Cournot Prior, run on a Runpod pod that tears itself down.
+"""LoRA SFT for Cournot-Cold 8B, run on a Runpod pod that tears itself down.
 
     uv run python scripts/sft_train.py --corpus data/sft_corpus.jsonl --out runs_sft/arm0
 
