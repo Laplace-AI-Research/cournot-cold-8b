@@ -10,7 +10,7 @@ through the identical scoring code as every text arm.
 
 The footing flags must match whatever the adapter was TRAINED with
 (`/preflight-config-check`). Scoring a chat-templated adapter on raw prompts is
-the defect `docs/10` (2026-08-24c) records, and it is silent.
+the defect the internal decisions log (2026-08-24c) records, and it is silent.
 """
 
 from __future__ import annotations

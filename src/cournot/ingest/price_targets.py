@@ -1,4 +1,4 @@
-"""Supervision points from a price series, in the shape `docs/10` decided.
+"""Supervision points from a price series, in the shape the internal decisions log decided.
 
 For a forecast at `as_of`, the target is the price at
 `τ = as_of + lam*(resolved_at - as_of)` — never `price(as_of)`, which is the
@@ -47,7 +47,7 @@ DEFAULT_TERMINAL_EXCLUSION = timedelta(hours=1)
 #: Lambda is a *fraction* of the remaining horizon, so on a densely-observed
 #: question a small lambda resolves to a target minutes away — which is the
 #: contemporaneous price, i.e. the evaluation baseline, reached by a route the
-#: lambda=0 exclusion does not cover. Measured and priced in `docs/10`
+#: lambda=0 exclusion does not cover. Measured and priced in the internal decisions log
 #: (2026-08-14, minimum absolute separation).
 DEFAULT_MIN_SEPARATION = timedelta(hours=6)
 

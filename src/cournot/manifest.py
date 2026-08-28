@@ -116,7 +116,7 @@ class DecodeConfig:
     here -- thinking mode was on by default in one serving stack and off in the
     other, and nothing in the manifest could tell the two runs apart. A day was
     spent attributing the difference to training, then to padding, before the
-    cause turned out to be a default nobody had written down (`docs/10`,
+    cause turned out to be a default nobody had written down (the internal decisions log,
     2026-08-24c/e).
 
     `docs/11` rule 3: a load-bearing field carries an external invariant. The
@@ -134,7 +134,7 @@ class DecodeConfig:
 
     prompt_construction: str
     """`chat_template` or `raw`. Scoring a templated base against raw-prompted
-    adapters is the defect `docs/10` (2026-08-24c) records."""
+    adapters is the defect the internal decisions log (2026-08-24c) records."""
 
     temperature: float
     """0.0 is greedy. Ollama defaults to 0.8 and does not say so."""
@@ -146,13 +146,13 @@ class DecodeConfig:
     probability_read: str
     """`expectation`, `argmax` or `scalar_head`. Against the thinking base the
     SIGN of the SFT effect depends on the first two, and both signs are
-    significant (`docs/10`, 2026-08-24g).
+    significant (the internal decisions log, 2026-08-24g).
 
     `scalar_head` is the Phase 2 path (`docs/14`): a regression output read
     directly off a sequence-classification head, generating no tokens at all.
     Added 2026-08-27 because `DecodeConfig` could not describe the artifact
     about to ship, so `/preflight-config-check` could not gate its scoring run
-    (`docs/10`, 2026-08-27t)."""
+    (the internal decisions log, 2026-08-27t)."""
 
     max_new_tokens: int
     """A cap short enough to truncate a thinking block changes the answer.
@@ -279,7 +279,7 @@ def build_manifest(
 
     `decode` is keyword-only and has no default, so a caller cannot omit it and
     inherit whatever the serving stack happened to do. That omission is what let
-    0.2288 and 0.2374 coexist for a day (`docs/10`, 2026-08-24e).
+    0.2288 and 0.2374 coexist for a day (the internal decisions log, 2026-08-24e).
     """
     return RunManifest(
         model_hash=model_hash,

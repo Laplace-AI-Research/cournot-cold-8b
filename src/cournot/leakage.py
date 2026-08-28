@@ -129,7 +129,7 @@ class SourceTrustRegistry:
         return len(self._tiers)
 
 
-# Ratified 2026-08-14 (`docs/10-decisions.md`). No longer provisional for the
+# Ratified 2026-08-14 (the internal decisions log). No longer provisional for the
 # sources listed here; adding a source is a decision-log entry, and any change to
 # this mapping bumps LEAKAGE_DETECTOR_VERSION.
 _DEFAULT_TIERS: dict[str, TrustTier] = {
@@ -641,7 +641,7 @@ class OutcomeScanConfig:
     TODO(decision): tau must be tuned on a labelled set of known-leaky snippets,
     not picked by feel, and traded off explicitly — a pre-resolution doc can
     legitimately quote a forecast phrased like the outcome, so this check has a
-    real false-positive rate. Record in `docs/10-decisions.md`.
+    real false-positive rate. Record in the internal decisions log.
     """
 
     strictness: ScanStrictness = ScanStrictness.NORMALIZED
@@ -651,7 +651,7 @@ class OutcomeScanConfig:
         if self.strictness is ScanStrictness.FUZZY and self.fuzzy_threshold is None:
             raise ValueError(
                 "ScanStrictness.FUZZY requires an explicit fuzzy_threshold (tau); "
-                "there is no defensible default — see docs/10-decisions.md"
+                "there is no defensible default — see the internal decisions log"
             )
         if self.fuzzy_threshold is not None and not (0.0 < self.fuzzy_threshold <= 1.0):
             raise ValueError(f"fuzzy_threshold must be in (0, 1], got {self.fuzzy_threshold}")
@@ -717,7 +717,7 @@ def scan_for_outcome_strings(
     outcome could be written — "Biden wins Pennsylvania", "CPI rose 3.4%", "the
     merger was blocked".
 
-    Producing those forms is split in two (`docs/10-decisions.md`, 2026-08-13):
+    Producing those forms is split in two (the internal decisions log, 2026-08-13):
     synthetic auto-resolved questions can generate them mechanically from the
     same template that built the question, which covers the bulk of corpus
     volume and needs no decision; real market questions with prose resolution
@@ -1138,7 +1138,7 @@ def null_threshold(
     Standard error has a job here, but it is `ProbeReport.standard_error`,
     reporting whether the null itself is well enough estimated to gate on.
 
-    No number was written into `docs/10-decisions.md` up front because any
+    No number was written into the internal decisions log up front because any
     a-priori threshold would have been arbitrary. This one is measured, and it is
     re-measured per checkpoint — see `compare_to_null`.
     """
@@ -1289,7 +1289,7 @@ def _normal_cdf(x: float) -> float:
 
 
 # --------------------------------------------------------------------------
-# Confidence-toward-truth gate (`docs/10`, 2026-08-21)
+# Confidence-toward-truth gate (the internal decisions log, 2026-08-21)
 # --------------------------------------------------------------------------
 
 #: A case "reads as leaked" when the model ends this confident in the truth.

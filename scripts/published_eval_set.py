@@ -20,7 +20,7 @@ refresh never captured `closeTime` and the builder substituted `resolved_at`.
 
 That substitution puts a post-`as_of` fact into the prompt (non-negotiable #1)
 and makes `dev` and `published` non-commensurable, since `dev` is built from the
-parquet corpus and carries real close times. See `docs/10`, 2026-08-27o.
+parquet corpus and carries real close times. See the internal decisions log, 2026-08-27o.
 
 So: **a row with no `close_ts` is refused, not defaulted.** Defaulting is exactly
 how the defect entered, and a builder that silently fills a leakage-relevant

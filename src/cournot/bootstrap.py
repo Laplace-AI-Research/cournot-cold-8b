@@ -18,7 +18,7 @@ would treat five correlated observations as five independent ones and shrink the
 interval by roughly `sqrt(5)`.
 
 That is the same pseudo-replication the phi arms were already flagged for
-(`docs/10`, market parity: "the arms are not independent — same question per
+(the internal decisions log, market parity: "the arms are not independent — same question per
 arm"). Fixing it in the design and then losing it in the interval would be worse
 than not computing one.
 

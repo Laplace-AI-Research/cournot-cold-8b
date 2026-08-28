@@ -2,7 +2,7 @@
 
 `docs/06` describes this machinery pointed at the model. This module points it at
 the *teacher*: a market price is a low-variance target and a biased one
-(`docs/10`, 2026-08-14), so before a price becomes a training target it is passed
+(the internal decisions log, 2026-08-14), so before a price becomes a training target it is passed
 through a map fitted on realized outcomes. Realized outcomes are unbiased and
 useless per-question; at corpus scale they are exactly what is needed to estimate
 a systematic distortion.
@@ -15,7 +15,7 @@ Two properties the naive version does not have:
   share an outcome, so splitting by point would put the same outcome on both
   sides of the fold and reintroduce exactly what cross-fitting removes.
 - **Stratification as a parameter.** Market bias is category-dependent, and
-  categories do not exist yet (`docs/10`, 2026-08-14). `fit_cross_fitted` takes a
+  categories do not exist yet (the internal decisions log, 2026-08-14). `fit_cross_fitted` takes a
   stratum key per row; passing `None` gives the global map, and passing a category
   later is a call-site change rather than a rewrite.
 

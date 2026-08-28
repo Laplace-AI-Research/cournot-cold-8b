@@ -73,7 +73,7 @@ class InvariantRegistry:
         if missing:
             raise UndeclaredFieldError(
                 f"{self.source!r} has load-bearing fields with no declared external "
-                f"invariant: {missing}. Declare one, or argue in docs/10 why the "
+                f"invariant: {missing}. Declare one, or argue in the decisions log why the "
                 "field is not load-bearing."
             )
 

@@ -1,6 +1,6 @@
 """Manifold ingestion: normalized corpus rows to `QuestionRecord`, every drop counted.
 
-Source choice is argued in `docs/10-decisions.md` (2026-08-14). Short version:
+Source choice is argued in the internal decisions log (2026-08-14). Short version:
 Metaculus carries no outcomes in the available snapshot, Polymarket has no
 `created_ts`, and Kalshi's `resolve_ts` is not an actual settlement time — 39% of
 its "resolved" rows carry a `resolve_ts` after the snapshot was generated, which
@@ -50,7 +50,7 @@ __all__ = [
 SOURCE = "manifold"
 
 #: Fields the source does not supply. Explicit sentinels rather than invented
-#: values — and an open question in `docs/10`, because a sentinel makes "not yet
+#: values — and an open question in the internal decisions log, because a sentinel makes "not yet
 #: assigned" indistinguishable from a class genuinely named "unassigned".
 UNCLASSIFIED_CATEGORY = "unclassified"
 UNASSIGNED_BASE_RATE_CLASS = "unassigned"

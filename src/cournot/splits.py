@@ -1,7 +1,7 @@
 """The temporal split, and the guard that keeps dev numbers out of model cards.
 
 `docs/01` "Temporal split", `docs/07`, and the freeze-date entry in
-`docs/10-decisions.md`. Three things this module exists to make structural:
+the internal decisions log. Three things this module exists to make structural:
 
 1. **The split keys on `resolved_at`** — actual resolution, never `open_date`
    and never `scheduled_resolve_date`. A question that was scheduled for March
@@ -59,7 +59,7 @@ __all__ = [
 ]
 
 
-#: The global freeze. Recorded in `docs/10-decisions.md` (entry dated 2026-08-13).
+#: The global freeze. Recorded in the internal decisions log (entry dated 2026-08-13).
 #:
 #: A clean UTC midnight that was strictly in the future when the decision was
 #: committed, so "nothing in `published` resolved before we committed to the
@@ -73,7 +73,7 @@ __all__ = [
 FREEZE = datetime(2026, 8, 15, tzinfo=UTC)
 
 #: Start of the dev window, carved from the training side. See
-#: `docs/10-decisions.md` for why twelve months.
+#: the internal decisions log for why twelve months.
 DEV_START = FREEZE - timedelta(days=365)
 
 
@@ -316,7 +316,7 @@ def census(
 
 
 def format_census(counts: Mapping[Split, SplitCensus]) -> str:
-    """Render the census as a markdown table, for pasting into `docs/10`."""
+    """Render the census as a markdown table, for pasting into the internal decisions log."""
     header = "| Split | n | lifetime <30d | 30-180d | 180d+ |\n|---|---:|---:|---:|---:|"
     rows = [
         f"| {split.value} | {c.n} | "

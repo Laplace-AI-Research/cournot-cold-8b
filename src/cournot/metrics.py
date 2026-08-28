@@ -496,7 +496,7 @@ def ece(
 #: caps a single confident miss at ~13.8 nats, which is punishing but not
 #: unbounded. It is a reporting choice, so it is carried on the result and must
 #: be stated wherever the number is: two log scores with different eps are not
-#: comparable. Record the final choice in `docs/10-decisions.md`.
+#: comparable. Record the final choice in the internal decisions log.
 DEFAULT_LOG_SCORE_EPS = 1e-6
 
 

@@ -3,7 +3,7 @@
     uv run python scripts/scalar_train.py --corpus data/sft_corpus_v4.jsonl \
         --eval-set data/bakeoff_3000.json --out runs_scalar/arm_price
 
-Replaces `docs/05` RL, deferred 2026-08-24. The argument is in `docs/10`
+Replaces `docs/05` RL, deferred 2026-08-24. The argument is in the internal decisions log
 (direction re-scope); what matters here is the three properties this shape has
 and text SFT does not:
 
@@ -13,7 +13,7 @@ and text SFT does not:
 2. **Minimum target variance**, which is the `brier` experiment's finding applied
    at the smallest scale that tests it.
 3. **No decoder to collapse.** v1 lost 438 of 500 forecasts to argmax; a scalar
-   head has no argmax. `docs/10` (2026-08-24g) showed the sign of the SFT effect
+   head has no argmax. the internal decisions log (2026-08-24g) showed the sign of the SFT effect
    depends on the decoder. Here there is no such degree of freedom.
 
 ## What the head is

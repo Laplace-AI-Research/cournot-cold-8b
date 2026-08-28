@@ -161,7 +161,7 @@ def _context(
     # against a 30-day spacing and NO valid as_of can satisfy the default. That
     # is the normal state of knowledge for a macro forecaster, not staleness, and
     # measuring it against spacing rejected 100% of macro questions
-    # (`docs/10`, 2026-08-22).
+    # (the internal decisions log, 2026-08-22).
     #
     # Defaults to `span`, so behaviour is unchanged unless a caller states the
     # lag its series actually has.

@@ -23,7 +23,7 @@ arms. That is why one arm runs before the four-arm mixture sweep.
 
 ## Self-teardown
 
-`docs/10` (2026-08-23) permits unattended provisioning only if the job stops its
+the internal decisions log (2026-08-23) permits unattended provisioning only if the job stops its
 own meter. `--teardown-pod` terminates the pod in a `finally` block, so it fires
 on success, on exception, and on SIGTERM. The one case it cannot cover is the
 process being killed outright, which is what the caller's spend ceiling is for.
@@ -184,7 +184,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         default="",
         help=(
             "Runpod pod id to terminate when this process ends, however it ends. "
-            "Required by `docs/10` (2026-08-23) for unattended runs; leave empty "
+            "Required by the internal decisions log (2026-08-23) for unattended runs; leave empty "
             "only when running somewhere that is not billing by the hour."
         ),
     )
@@ -194,7 +194,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         help=(
             "wrap the prompt in the model's chat template. MUST match what "
             "vllm_score.py is given, or training and scoring are on different "
-            "footings -- the defect docs/10 (2026-08-24c) records."
+            "footings -- the defect the internal decisions log records (2026-08-24c)."
         ),
     )
     parser.add_argument("--dry-run", action="store_true", help="load and report, train nothing")
@@ -249,7 +249,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             Until 2026-08-24 this emitted the raw `PROMPT` while the base model
             was scored through Ollama, which templates server-side -- so every
             base-vs-adapter table compared a templated base against
-            raw-prompted adapters (`docs/10`, 2026-08-24c). `--chat-template`
+            raw-prompted adapters (the internal decisions log, 2026-08-24c). `--chat-template`
             closes that, and it must be set to whatever `vllm_score.py` is given.
             """
             body = PROMPT.format(

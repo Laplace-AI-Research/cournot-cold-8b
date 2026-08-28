@@ -2,7 +2,7 @@
 
 ## Why this module exists
 
-`docs/10` (2026-08-24) records the correction that motivates it. The first SFT
+the internal decisions log (2026-08-24) records the correction that motivates it. The first SFT
 arm returned **392 of 490 forecasts as exactly 0.0**, and that was diagnosed as a
 corpus defect: half the training targets were the literal string `0.00`. The
 corpus *was* defective. But it was not the only cause.
