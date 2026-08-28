@@ -1,5 +1,5 @@
 ---
-license: apache-2.0
+license: cc-by-nc-4.0
 base_model: Qwen/Qwen3-8B
 base_model_relation: adapter
 library_name: peft
@@ -13,10 +13,10 @@ model-index:
           name: Cournot published split (Manifold, resolved after 2026-08-15 freeze)
           type: manifold-published
         metrics:
-          - {type: brier, value: 0.1800, name: Brier score}
-          - {type: calibration, value: 0.0241, name: Murphy calibration}
-          - {type: resolution, value: 0.0900, name: Murphy resolution}
-          - {type: ece, value: 0.1037, name: ECE (equal-width, 10 bins)}
+          - {type: brier, value: 0.1893, name: Brier score}
+          - {type: calibration, value: 0.0048, name: Murphy calibration}
+          - {type: resolution, value: 0.0627, name: Murphy resolution}
+          - {type: ece, value: 0.0558, name: ECE (equal-width, 10 bins)}
 ---
 
 # Cournot Prior 8B
@@ -30,11 +30,22 @@ LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 
 ![Cournot Prior 8B architecture](assets/architecture.svg)
 
+**Weights:** [`Laplace-AI-Research/cournot-prior-8b`](https://huggingface.co/Laplace-AI-Research/cournot-prior-8b)
+on the Hugging Face Hub — LoRA adapter, 349 MB.
+**Evidence:** [`Laplace-AI-Research/cournot-prior-8b`](https://github.com/Laplace-AI-Research/cournot-prior-8b)
+on GitHub — the eval splits behind every claim, this model's raw forecasts
+(including the venue transfers where it *failed*), the metric code, and
+`verify.py`, which recomputes every number below without a model or a GPU.
+
+The training corpus is **not** redistributed; `DATASHEET.md` documents its
+composition, collection and known defects in its place. See
+[Training data provenance and licensing](#training-data-provenance-and-licensing).
+
 ---
 
 ## The headline number
 
-**Brier 0.1800** on 132 questions that resolved after a freeze date committed in
+**Brier 0.1893** on 277 questions that resolved after a freeze date committed in
 writing before it passed.
 
 Reported the way the field's benchmark maintainers ask for it — a raw Brier with
@@ -46,20 +57,28 @@ of only ~0.64.)
 
 | | published (headline) | dev (iteration only) |
 |---|---:|---:|
-| n | 132 | 3,000 |
-| **Brier** | **0.1800** | 0.1674 |
-| base rate | 0.4621 | 0.3970 |
-| base-rate Brier (uncertainty) | 0.2486 | 0.2394 |
-| Murphy calibration ↓ | 0.0241 | 0.0010 |
-| Murphy resolution ↑ | 0.0900 | 0.0718 |
-| ECE, equal-width / equal-mass (10 bins) | 0.1037 / 0.1086 | 0.0233 / 0.0260 |
-| distinct output values | 70 | 99 |
-| forecast sd | 0.268 | 0.283 |
-| BSS vs base rate *(diagnostic, not a comparability claim)* | +27.6% | +30.1% |
+| n | 277 | 3,000 |
+| **Brier** | **0.1893** | 0.1674 |
+| base rate | 0.4946 | 0.3970 |
+| base-rate Brier (uncertainty) | 0.2500 | 0.2394 |
+| Murphy calibration ↓ | 0.0048 | 0.0010 |
+| Murphy resolution ↑ | 0.0627 | 0.0718 |
+| ECE, equal-width / equal-mass (10 bins) | 0.0558 / 0.0525 | 0.0233 / 0.0260 |
+| distinct output values | 83 | 99 |
+| forecast sd | 0.250 | 0.283 |
+| BSS vs base rate *(diagnostic, not a comparability claim)* | +24.3% | +30.1% |
 
-**Calibration is materially worse on the published split than on dev** (ECE 0.104
-vs 0.023). We do not think this is a fluke to be explained away — see
-[Known weaknesses](#known-weaknesses), where the responsible bin is identified.
+Calibration is somewhat worse on published than on dev (ECE 0.056 vs 0.023) and
+resolution is lower (0.063 vs 0.072). Both are what a smaller, harder, forward-
+accumulating split tends to look like; neither currently rests on a single bin.
+See [Known weaknesses](#known-weaknesses).
+
+> **These numbers replaced an earlier set on 2026-08-27, and the reason is worth
+> your attention.** The published split was found to be feeding the model each
+> question's *actual resolution date* in place of its *scheduled close* —
+> information not available at `as_of`. The split was rebuilt and the model
+> re-scored. Full disclosure below under
+> [The defect we found in our own evaluation](#the-defect-we-found-in-our-own-evaluation).
 
 ### For context, not as a comparison
 
@@ -74,7 +93,7 @@ so a real difficulty-adjusted comparison exists.
 
 ## Contamination
 
-**Zero of the 3,000 dev questions and zero of the 132 published questions
+**Zero of the 3,000 dev questions and zero of the 277 published questions
 resolved before the base model was released.** Outcome memorisation is therefore
 closed by construction, not by argument.
 
@@ -85,8 +104,8 @@ closed by construction, not by argument.
   a stated pretraining cutoff. This is deliberate: **Qwen3-8B publishes no data
   cutoff** — not in the technical report, not on the model card. A release date
   is externally checkable; a cutoff is a vendor claim.
-- **88% of published questions (116/132) also *opened* after that release date**,
-  and score **BSS +25.0% on their own** — so the result does not rest on
+- **88% of published questions (243/277) also *opened* after that release date**,
+  and score **BSS +20.9% on their own** — so the result does not rest on
   questions that existed before the base model shipped.
 
 **What this does not establish, and what has since been tested.** The published
@@ -196,12 +215,21 @@ lower bound and the subset as approximate. We report it because the opposite
 worry (that the headline was propped up by sports) is a reasonable one and the
 data refutes it — excluding sports *raises* the aggregate.
 
-**4. Calibration degrades on the published split**, ECE 0.104 vs 0.023 on dev.
-Both binning schemes agree on the culprit: forecasts in the **0.52–0.59** band
-(n=13) had an observed rate of 0.154 against a mean forecast of 0.557, a gap of
-+0.40. At n=13 this is one unlucky bin, not a diagnosed defect — but it is the
-reason the headline calibration term is 0.0241, and it will be re-checked as the
-published split accumulates.
+**4. Calibration is worse on published than on dev**, ECE 0.056 vs 0.023, and
+resolution is lower, 0.063 vs 0.072. No single bin is responsible: the largest
+equal-width reliability gap is **−0.184 in the 0.2–0.3 band at n=13**, and the
+mid-range bands that carry most of the mass are close — 0.5–0.6 is n=47 at
+−0.030, 0.4–0.5 is n=63 at −0.097.
+
+An earlier version of this card attributed the published-split calibration gap to
+one 13-question bin at 0.52–0.59. **That bin does not survive the corrected
+split** (see below); the gap is now smaller and diffuse rather than concentrated.
+We are recording the change rather than quietly restating the conclusion.
+
+The honest reading at n=277 is that published is a smaller and somewhat harder
+sample than dev, not that a specific defect has been located. It will be
+re-checked as the split accumulates — the forward accrual is the only thing that
+settles it.
 
 **5. It is trained at a single `as_of`.** Every training example uses
 `as_of = open_date`, so the model is off-distribution at any later `as_of` and
@@ -243,9 +271,12 @@ Kalshi) under those two conditions.
 
 ## Evaluation data
 
-- **`published`** (headline, n=132) — Manifold questions resolving after
+- **`published`** (headline, n=277) — Manifold questions resolving after
   2026-08-15. Never trained on, contamination-free by construction. Accumulates
-  forward; the only source of an external number.
+  forward; the only source of an external number. Built by
+  `scripts/published_eval_set.py`, which refuses any question whose scheduled
+  close time is unknown rather than substituting a default — see below for why
+  that refusal exists.
 - **`dev`** (n=3,000) — resolving 2025-08-15 to 2026-08-15. Gates iteration.
   **Never published as a headline claim.**
 - **Parity** (n=1,741) — the subset with a usable price series, for crowd
@@ -255,6 +286,60 @@ Kalshi) under those two conditions.
 All intervals are paired, question-clustered bootstraps (10,000 resamples).
 Seed-to-seed noise on this setup is **±0.003 Brier**, so smaller differences are
 not findings.
+
+---
+
+## The defect we found in our own evaluation
+
+On **2026-08-27**, before this model was released publicly, we found that the
+published evaluation split had been feeding the model information it could not
+have had.
+
+**What it was.** Every forecast prompt carries a resolution date. The date a
+forecaster actually has at `as_of` is the question's **scheduled close**. Our
+published split was supplying the date the question **actually resolved** — on
+132 of 132 rows. The corresponding figure on `dev`, which is built from a
+different source, was 37.7%.
+
+**How it happened.** The script that collects post-freeze questions from the
+Manifold API recorded the title, resolution and creation time but **dropped
+`closeTime`**, a field present in the same API response. With no close time
+available, whatever built the eval set filled the gap with the resolution time.
+
+**Why it went unnoticed.** `published_eval.json` had **no builder script**. It
+entered the repository as a committed JSON file with no code behind it, so it
+could not be regenerated, diffed or reviewed. The defect lived in the one
+artifact in the pipeline nobody could reproduce. That is the part we consider
+most instructive.
+
+**What we fixed.** The collector now captures `closeTime`; a backfill recovered
+it for questions already gathered; and the split is now built by
+`scripts/published_eval_set.py`, which **refuses a question with no close time
+rather than defaulting one**, because defaulting is how the defect entered. The
+builder reproduces the previously shipped rows field-for-field and is
+mutation-tested.
+
+**What changed, and what we cannot claim.** The corrected split is larger (277 vs
+132, partly from forward accrual) and its fields now match `dev`'s semantics
+(41.9% vs 37.7% coincidental matches), so the two are commensurable for the first
+time. Headline Brier moved 0.1800 → 0.1893, calibration 0.0241 → 0.0048, ECE
+0.104 → 0.056.
+
+**We cannot attribute those changes to the fix.** On the 132 questions common to
+both, holding weights and adapter constant and changing only the prompt field, the
+paired question-clustered interval is **+0.0070 Brier [−0.0155, +0.0330]** and
+**−0.0118 resolution [−0.0376, +0.0143]** — both spanning zero, and underpowered:
+the Brier half-width is 3.5× the effect, and detecting it would need n≈1,584. The
+difference between the old and new headline is dominated by the split containing
+different questions, not by the correction.
+
+So the honest statement is not "the old number was inflated." It is: **the old
+number was produced under a defective input, and the magnitude of that defect is
+below what this sample can measure.** The fix is justified by the leak itself,
+not by its measured effect.
+
+Derivation: `docs/10-decisions.md`, entries 2026-08-27o and 2026-08-27u, in the
+research repository.
 
 ---
 
@@ -288,8 +373,9 @@ The corpus is derived from the Manifold Markets public API.
 **Manifold's terms restrict bulk API data to personal and non-commercial use, and
 state that it may not be used to train machine learning models for commercial
 purposes without a data licence** (data@manifold.markets). This adapter is
-released for **research and non-commercial use** on that basis. Anyone intending
-commercial use must obtain that licence independently.
+released under **CC BY-NC 4.0** on that basis — research and non-commercial use.
+Anyone intending commercial use must obtain that licence from Manifold
+independently; it is not ours to grant.
 
 The raw corpus is **not redistributed**. A datasheet describing its composition,
 collection and known defects is published in its place.
@@ -301,10 +387,19 @@ use of the base weights.
 
 ## Reproducing
 
+Every headline number in this card is recomputed from the shipped forecasts by
+`verify.py` — **no model, no GPU, no network**:
+
+```bash
+uv run python verify.py
+```
+
+To regenerate those forecasts from the weights instead:
+
 ```bash
 uv run python scripts/scalar_score.py \
-  --adapter runs_sft/adapter_tfull \
-  --set data/published_eval.json \
+  --adapter Laplace-AI-Research/cournot-prior-8b \
+  --set eval/published_eval.json \
   --out published.jsonl \
   --chat-template
 ```

@@ -144,12 +144,22 @@ class DecodeConfig:
     which is more than any training arm this project has run."""
 
     probability_read: str
-    """`expectation` or `argmax`. Against the thinking base the SIGN of the SFT
-    effect depends on this, and both signs are significant (`docs/10`,
-    2026-08-24g)."""
+    """`expectation`, `argmax` or `scalar_head`. Against the thinking base the
+    SIGN of the SFT effect depends on the first two, and both signs are
+    significant (`docs/10`, 2026-08-24g).
+
+    `scalar_head` is the Phase 2 path (`docs/14`): a regression output read
+    directly off a sequence-classification head, generating no tokens at all.
+    Added 2026-08-27 because `DecodeConfig` could not describe the artifact
+    about to ship, so `/preflight-config-check` could not gate its scoring run
+    (`docs/10`, 2026-08-27t)."""
 
     max_new_tokens: int
-    """A cap short enough to truncate a thinking block changes the answer."""
+    """A cap short enough to truncate a thinking block changes the answer.
+
+    Must be > 0 for the generative reads. Must be exactly 0 for `scalar_head`,
+    which generates nothing — a nonzero cap there would be a footing recorded
+    that does not exist."""
 
     def __post_init__(self) -> None:
         _require("serving_stack", self.serving_stack)
@@ -158,13 +168,23 @@ class DecodeConfig:
                 f"prompt_construction must be 'chat_template' or 'raw', got "
                 f"{self.prompt_construction!r}"
             )
-        if self.probability_read not in ("expectation", "argmax"):
+        if self.probability_read not in ("expectation", "argmax", "scalar_head"):
             raise IncompleteManifestError(
-                f"probability_read must be 'expectation' or 'argmax', got {self.probability_read!r}"
+                f"probability_read must be 'expectation', 'argmax' or 'scalar_head', "
+                f"got {self.probability_read!r}"
             )
         if self.temperature < 0.0:
             raise IncompleteManifestError(f"temperature must be >= 0, got {self.temperature}")
-        if self.max_new_tokens <= 0:
+        if self.probability_read == "scalar_head":
+            # The head generates nothing. A nonzero cap would record a decode
+            # parameter that never applied, which is the class of silent
+            # mis-description this type exists to prevent.
+            if self.max_new_tokens != 0:
+                raise IncompleteManifestError(
+                    f"max_new_tokens must be 0 for scalar_head (it generates no "
+                    f"tokens), got {self.max_new_tokens}"
+                )
+        elif self.max_new_tokens <= 0:
             raise IncompleteManifestError(f"max_new_tokens must be > 0, got {self.max_new_tokens}")
 
     def as_dict(self) -> dict[str, str]:
