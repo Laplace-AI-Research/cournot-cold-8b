@@ -356,8 +356,9 @@ number was produced under a defective input, and the magnitude of that defect is
 below what this sample can measure.** The fix is justified by the leak itself,
 not by its measured effect.
 
-Derivation: `docs/10-decisions.md`, entries 2026-08-27o and 2026-08-27u, in the
-research repository.
+Derivation sits in an internal decisions log which is **not public**. Everything
+needed to check the claim is in this repository: the corrected split, the
+regenerated forecasts, and `verify.py`.
 
 ---
 
@@ -432,8 +433,14 @@ split id and git SHA. Numbers without a manifest are not comparable.
 
 ## Citation and provenance of claims
 
-Every number in this card is derived in `docs/10-decisions.md`, which also
-records the results that **failed** — a varied-`as_of` arm that hedged, a
-mixed-venue arm that traded Manifold resolution for Polymarket robustness, two
-claims that died under a paired bootstrap, and a citation we retracted after
-failing to find it in the paper we had attributed it to.
+Every number in this card is recomputed from the shipped forecasts by
+`verify.py` — no model, no GPU, no network. **That is the check that matters,
+and it is the one you can run.**
+
+Behind it sits an internal decisions log, **not public**, which also records the
+results that failed: a varied-`as_of` arm that hedged, a mixed-venue arm that
+traded Manifold resolution for Polymarket robustness, two claims that died under
+a paired bootstrap, a leak found in this project's own published split, and a
+citation retracted after we could not find it in the paper we had attributed it
+to. Nothing in this card depends on that log — every claim here is either
+reproducible from the files in this repository or stated as unverified.

@@ -85,5 +85,6 @@ corpus is not.
 
 `published` accumulates forward as questions resolve. Its statistics will move,
 and the model card's headline is expected to be re-derived rather than frozen.
-Corrections and retractions are recorded in the research repository's decisions
-log, `Laplace-AI-Research/cournot-research`.
+Corrections and retractions are recorded in an internal decisions log, which is
+**not public**. Where a correction affects a number in this repository, the
+corrected number and the reason are carried here — see the model card.
