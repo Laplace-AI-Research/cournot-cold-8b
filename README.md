@@ -4,7 +4,17 @@ base_model: Qwen/Qwen3-8B
 base_model_relation: adapter
 library_name: peft
 pipeline_tag: text-classification
-tags: [forecasting, calibration, prediction-markets, brier-score, lora]
+tags:
+  - forecasting
+  - probabilistic-forecasting
+  - calibration
+  - uncertainty-quantification
+  - regression
+  - prediction-markets
+  - brier-score
+  - lora
+  - peft
+  - qwen3
 model-index:
   - name: cournot-cold-8b
     results:
