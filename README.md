@@ -6,7 +6,7 @@ library_name: peft
 pipeline_tag: text-classification
 tags: [forecasting, calibration, prediction-markets, brier-score, lora]
 model-index:
-  - name: cournot-prior-8b
+  - name: cournot-cold-8b
     results:
       - task: {type: forecasting, name: Binary event forecasting}
         dataset:
@@ -19,7 +19,7 @@ model-index:
           - {type: ece, value: 0.0558, name: ECE (equal-width, 10 bins)}
 ---
 
-# Cournot Prior 8B
+# Cournot-Cold 8B
 
 A **calibrated probability estimator** for binary questions about future events.
 Given a question, its resolution criteria, its scheduled resolution date and an
@@ -28,11 +28,11 @@ text alone** — no retrieval, no news, no market price.
 
 LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 
-![Cournot Prior 8B architecture](assets/architecture.svg)
+![Cournot-Cold 8B architecture](assets/architecture.svg)
 
-**Weights:** [`Laplace-AI-Research/cournot-prior-8b`](https://huggingface.co/Laplace-AI-Research/cournot-prior-8b)
+**Weights:** [`Laplace-AI-Research/cournot-cold-8b`](https://huggingface.co/Laplace-AI-Research/cournot-cold-8b)
 on the Hugging Face Hub — LoRA adapter, 349 MB.
-**Evidence:** [`Laplace-AI-Research/cournot-prior-8b`](https://github.com/Laplace-AI-Research/cournot-prior-8b)
+**Evidence:** [`Laplace-AI-Research/cournot-cold-8b`](https://github.com/Laplace-AI-Research/cournot-cold-8b)
 on GitHub — the eval splits behind every claim, this model's raw forecasts
 (including the venue transfers where it *failed*), the metric code, and
 `verify.py`, which recomputes every number below without a model or a GPU.
@@ -398,7 +398,7 @@ To regenerate those forecasts from the weights instead:
 
 ```bash
 uv run python scripts/scalar_score.py \
-  --adapter Laplace-AI-Research/cournot-prior-8b \
+  --adapter Laplace-AI-Research/cournot-cold-8b \
   --set eval/published_eval.json \
   --out published.jsonl \
   --chat-template
