@@ -34,10 +34,12 @@ LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 on the Hugging Face Hub — LoRA adapter, 349 MB.
 **Smaller sibling:** [`Cournot-Cold 4B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-4b)
 — trained on the same 81,870 questions with the same targets, seed and footing,
-and **statistically indistinguishable from this model on both splits**
-(dev n=3,000: Brier delta +0.0010 [−0.0020, +0.0040], with the interval resolving
-to the ±0.003 seed-noise floor). Take the 4B unless you need the transfer results
-below, which are measured only here.
+and **statistically indistinguishable from this model on four independent axes**:
+dev (n=3,000, Brier delta +0.0010 [−0.0020, +0.0040]), the published split
+(n=277), off-venue on Kalshi (n=778, −0.0064 [−0.0129, +0.0000]), and across
+seeds. Its transfer results are now measured on that model rather than inherited
+from this one. **Take the 4B** — half the base model, fits a 16 GB card, and on
+accuracy they are the same model.
 **Evidence:** [`Laplace-AI-Research/cournot-cold-8b`](https://github.com/Laplace-AI-Research/cournot-cold-8b)
 on GitHub — the eval splits behind every claim, this model's raw forecasts
 (including the venue transfers where it *failed*), the metric code, and
@@ -366,6 +368,9 @@ research repository.
 - **Padding:** right. The head pools the last non-pad token — the opposite
   convention from generation.
 - **Calibration:** beta calibration, fit on `dev`, never on `published`.
+- **Seed: replicated.** A second full-corpus run at seed 20260828 differs by
+  **+0.0012 Brier [−0.0016, +0.0041]** — not significant, half-width at the
+  ±0.003 noise floor. The shipped number is not one seed's luck.
 
 **Reproduction note:** `transformers >= 4.51.0` is required for
 `Qwen3ForSequenceClassification`; `config.pad_token_id` must be set explicitly.
