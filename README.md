@@ -32,6 +32,12 @@ LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 
 **Weights:** [`Laplace-AI-Research/cournot-cold-8b`](https://huggingface.co/Laplace-AI-Research/cournot-cold-8b)
 on the Hugging Face Hub — LoRA adapter, 349 MB.
+**Smaller sibling:** [`Cournot-Cold 4B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-4b)
+— trained on the same 81,870 questions with the same targets, seed and footing,
+and **statistically indistinguishable from this model on both splits**
+(dev n=3,000: Brier delta +0.0010 [−0.0020, +0.0040], with the interval resolving
+to the ±0.003 seed-noise floor). Take the 4B unless you need the transfer results
+below, which are measured only here.
 **Evidence:** [`Laplace-AI-Research/cournot-cold-8b`](https://github.com/Laplace-AI-Research/cournot-cold-8b)
 on GitHub — the eval splits behind every claim, this model's raw forecasts
 (including the venue transfers where it *failed*), the metric code, and
