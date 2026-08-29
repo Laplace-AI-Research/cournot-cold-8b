@@ -42,8 +42,16 @@ LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 
 **Weights:** [`Laplace-AI-Research/cournot-cold-8b`](https://huggingface.co/Laplace-AI-Research/cournot-cold-8b)
 on the Hugging Face Hub — LoRA adapter, 349 MB.
-**Smaller sibling:** [`Cournot-Cold 4B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-4b)
-— trained on the same 81,870 questions with the same targets, seed and footing,
+**Smaller siblings:** [`Cournot-Cold 4B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-4b)
+and [`Cournot-Cold 1.7B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-1-7b).
+The 1.7B is measurably worse — +0.0119 Brier [+0.0080, +0.0158] against the 4B on
+dev — and exists for the case where neither of the larger two will fit. Its card
+carries a **training-variance** measurement that applies to this model too: two
+runs of an identical recipe differ by more than a question-bootstrap interval
+implies, so a model-vs-model difference below roughly **0.008 Brier** should be
+treated as unresolved, including some of the intervals quoted on this page.
+
+The 4B is trained on the same 81,870 questions with the same targets, seed and footing,
 and **statistically indistinguishable from this model on four independent axes**:
 dev (n=3,000, Brier delta +0.0010 [−0.0020, +0.0040]), the published split
 (n=277), off-venue on Kalshi (n=778, −0.0064 [−0.0129, +0.0000]), and across
