@@ -75,11 +75,21 @@ counting questions.
 
 ## Distribution
 
-**The raw corpus is not redistributed.** Manifold's terms restrict bulk API data
-to personal and non-commercial use and prohibit training ML models for commercial
-purposes without a data licence (data@manifold.markets). This datasheet and the
-evaluation splits in `eval/` are published so results are checkable; the training
-corpus is not.
+**Neither the raw corpus nor any venue's question text is redistributed.**
+Manifold's terms restrict bulk API data to personal and non-commercial use and
+prohibit training ML models for commercial purposes without a data licence
+(data@manifold.markets). Kalshi's terms have not been reviewed by us and no
+position is asserted about them.
+
+The evaluation splits in `eval/` are published so results are checkable, and they
+carry **question ids, dates and outcomes only — no question titles.** An earlier
+version of these files shipped verbatim titles, which contradicted this section;
+they were removed on 2026-08-28 and every number in the model card still
+reproduces, because `verify.py` joins on `question_id` and never reads the text.
+
+Each row's `question_id` is the venue's own stable identifier, so anyone may
+retrieve the corresponding text from that venue directly, subject to that venue's
+terms rather than ours.
 
 ## Maintenance
 

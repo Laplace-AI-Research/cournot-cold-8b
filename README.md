@@ -199,6 +199,34 @@ that beats the home venue. Neither number alone is honest; both are given.
 Kalshi against 0.023 on Manifold dev. **A new venue needs its own calibration
 mapping**, fit on that venue's own development split.
 
+### The contamination-free Kalshi subset, where this model does not beat a constant
+
+The 778 above include questions that resolved before the training freeze. **117 of
+them resolved after it** (`resolved_at > 2026-08-15T00:00:00Z`), and that subset is
+contamination-free by the same rule as the published split. It is also the least
+flattering number in this card, so it is stated rather than omitted.
+
+| | n | Brier | resolution |
+|---|---:|---:|---:|
+| Cournot-Cold 8B | 117 | 0.2064 | 0.0356 |
+| **a constant at the base rate (0.2308)** | 117 | **0.1775** | 0.0000 |
+
+Paired bootstrap, 10,000 draws, clustered on `question_id` (each of the 117 is its
+own `event_ticker`, so question-level resampling *is* the cluster bootstrap):
+
+> **model minus constant: +0.0289 [-0.0109, +0.0673] — not significant.**
+
+**Read this as: on 117 contamination-free out-of-venue questions, this model is
+statistically indistinguishable from predicting the base rate on every one.** The
+point estimate is worse than the constant; the interval spans zero, so the honest
+claim is indistinguishability rather than a loss.
+
+The subset is small and lopsided — 88 of 117 are Elections, the stratum the table
+above identifies as this model's worst — so it should not be read as a verdict on
+the venue. It should be read as: **the transfer result above rests partly on
+pre-freeze questions, and the clean slice of it does not show skill.**
+
+
 ## Known weaknesses
 
 Named specifically, because a limitations section that hedges generically is not
@@ -378,7 +406,12 @@ regenerated forecasts, and `verify.py`.
   0.0018 with template, 0.2015 without).
 - **Padding:** right. The head pools the last non-pad token — the opposite
   convention from generation.
-- **Calibration:** beta calibration, fit on `dev`, never on `published`.
+- **Calibration: none applied.** The head's raw `sigmoid(logit)` is the shipped
+  probability -- `scalar_score.py` applies no post-hoc mapping, and no fitted
+  calibrator is distributed. An earlier version of this line claimed beta
+  calibration fit on `dev`; that step was never part of the pipeline. The
+  calibration figures above are therefore what the head produces **untuned**,
+  which is a stronger result than the original claim, not a weaker one.
 - **Seed: replicated.** A second full-corpus run at seed 20260828 differs by
   **+0.0012 Brier [−0.0016, +0.0041]** — not significant, half-width at the
   ±0.003 noise floor. The shipped number is not one seed's luck.

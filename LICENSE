@@ -1,7 +1,9 @@
 Cournot-Cold 8B — licence
 ==========================
 
-The LoRA adapter weights and the evaluation artifacts in this repository are
+The LoRA adapter weights, the forecasts, and the evaluation metadata in this
+repository (question ids, dates, outcomes -- NOT question text, which is not
+redistributed and is not ours to license) are
 licensed under Creative Commons Attribution-NonCommercial 4.0 International
 (CC BY-NC 4.0). Full text below.
 
