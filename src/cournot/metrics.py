@@ -497,7 +497,7 @@ def ece(
 #: caps a single confident miss at ~13.8 nats, which is punishing but not
 #: unbounded. It is a reporting choice, so it is carried on the result and must
 #: be stated wherever the number is: two log scores with different eps are not
-#: comparable. Record the final choice in the internal decisions log.
+#: comparable. Record the final choice in `docs/10-decisions.md`.
 DEFAULT_LOG_SCORE_EPS = 1e-6
 
 
@@ -741,4 +741,129 @@ def soft_target_score(probabilities: Sequence[float], targets: Sequence[float]) 
         mae=sum(abs(e) for e in errors) / n,
         mean_signed_error=sum(errors) / n,
         n=n,
+    )
+
+
+# ---------------------------------------------------------------------------
+# CORP — bin-free reliability, via the pool-adjacent-violators algorithm.
+#
+# Dimitriadis, Gneiting & Jordan, "Stable reliability diagrams for probabilistic
+# classifiers", PNAS 2021 (arXiv:2008.03033).
+#
+# WHY THIS EXISTS. `docs/07` says of ECE: "The scheme moves the number materially
+# and neither is right" -- equal-width leaves bins too sparse to estimate a
+# frequency on a skewed set, equal-mass has edges that move between checkpoints.
+# So our cards ship TWO ECE numbers because we cannot defend one. That is a
+# disclosure of a problem, not a solution to it.
+#
+# CORP removes the choice. The reliability curve IS the isotonic fit; there are
+# no bins, no scheme to defend, and no edges that drift when the data changes.
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class CorpDecomposition:
+    """`score = mcb - dsc + unc`, exactly, with no binning anywhere.
+
+    - `mcb` **miscalibration**: how much the score improves under the optimal
+      monotone recalibration. Zero means already calibrated. Always >= 0, because
+      recalibration cannot hurt on the data it was fit to -- which is also why
+      this is an in-sample quantity and is not a held-out claim.
+    - `dsc` **discrimination**: how much the recalibrated forecast beats the
+      constant. The bin-free counterpart of Murphy resolution.
+    - `unc` **uncertainty**: the score of a constant forecast at the base rate.
+      A property of the eval set, not of any model.
+    """
+
+    score: float
+    mcb: float
+    dsc: float
+    unc: float
+    n: int
+    #: The PAV-recalibrated forecast for each input, in input order. This is the
+    #: CORP reliability curve evaluated at the forecasts themselves.
+    recalibrated: tuple[float, ...]
+
+    @property
+    def residual(self) -> float:
+        """`score - (mcb - dsc + unc)`. Zero up to floating point, always.
+
+        Reported so a caller can assert it rather than trust it.
+        """
+        return self.score - (self.mcb - self.dsc + self.unc)
+
+
+def _pav(pairs: Sequence[tuple[float, float]]) -> list[float]:
+    """Weighted PAV on (forecast, outcome) pairs sorted by forecast.
+
+    Returns the isotonic fit at each pair, in the given order.
+
+    **Ties in the forecast are pooled before the fit.** Isotonic regression
+    cannot assign two values to one x, so observations sharing a forecast must
+    enter as a single weighted point. Without that, four observations at 0.5 with
+    outcomes 1,0,1,0 come out as a rising step function -- which is monotone in
+    the sort order and meaningless, because the sort order among ties is
+    arbitrary. An earlier version of this function documented the pooling and did
+    not do it; the tie tests caught it.
+    """
+    # 1. pool ties: one weighted point per distinct forecast value.
+    pooled: list[list[float]] = []  # [x, sum(y), count]
+    for x, y in pairs:
+        if pooled and pooled[-1][0] == x:
+            pooled[-1][1] += y
+            pooled[-1][2] += 1.0
+        else:
+            pooled.append([x, y, 1.0])
+
+    # 2. PAV over the pooled points, merging on a violation.
+    blocks: list[list[float]] = []  # [sum(y), count]
+    for _, sy, c in pooled:
+        blocks.append([sy, c])
+        while len(blocks) > 1 and blocks[-2][0] / blocks[-2][1] > blocks[-1][0] / blocks[-1][1]:
+            s, n = blocks.pop()
+            blocks[-1][0] += s
+            blocks[-1][1] += n
+
+    # 3. expand back to one value per original observation.
+    out: list[float] = []
+    for s, n in blocks:
+        out.extend([s / n] * int(n))
+    return out
+
+
+def corp(forecasts: Sequence[float], outcomes: Sequence[float]) -> CorpDecomposition:
+    """Bin-free Brier decomposition. `score = mcb - dsc + unc`.
+
+    The Murphy decomposition in `brier_decomposition` needs a binning scheme and
+    carries a residual that depends on it. This has neither.
+    """
+    if len(forecasts) != len(outcomes):
+        raise ValueError(f"length mismatch: {len(forecasts)} forecasts, {len(outcomes)} outcomes")
+    n = len(forecasts)
+    if n == 0:
+        raise ValueError("no observations")
+
+    # Sort by forecast, keeping the original position so the result can be
+    # returned in input order. Ties broken by outcome for determinism -- an
+    # arbitrary but FIXED order, so two runs on the same data agree.
+    order = sorted(range(n), key=lambda i: (forecasts[i], outcomes[i]))
+    pairs = [(float(forecasts[i]), float(outcomes[i])) for i in order]
+    fitted_sorted = _pav(pairs)
+
+    recal = [0.0] * n
+    for pos, i in enumerate(order):
+        recal[i] = fitted_sorted[pos]
+
+    base = sum(outcomes) / n
+    s_fore = sum((float(p) - float(y)) ** 2 for p, y in zip(forecasts, outcomes, strict=True)) / n
+    s_recal = sum((r - float(y)) ** 2 for r, y in zip(recal, outcomes, strict=True)) / n
+    s_const = sum((base - float(y)) ** 2 for y in outcomes) / n
+
+    return CorpDecomposition(
+        score=s_fore,
+        mcb=s_fore - s_recal,
+        dsc=s_const - s_recal,
+        unc=s_const,
+        n=n,
+        recalibrated=tuple(recal),
     )

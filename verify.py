@@ -9,7 +9,7 @@ model card, the model card is wrong.
 from __future__ import annotations
 import json, statistics, sys, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "src"))
-from cournot.metrics import brier, ece, output_histogram
+from cournot.metrics import brier, corp, ece, output_histogram
 
 def load(p):
     out = {}
@@ -27,12 +27,14 @@ def report(label, eval_path, run_path):
     ys = [qs[k]["outcome"] for k in ids]
     ps = [fc[k] for k in ids]
     d, e, h = brier(ps, ys), ece(ps, ys), output_histogram(ps)
+    c = corp(ps, ys)
     print(f"\n{label}  n={len(ids)}")
     print(f"  Brier            {d.score:.4f}")
     print(f"  base rate        {d.base_rate:.4f}   base-rate Brier {d.uncertainty:.4f}")
     print(f"  calibration      {d.calibration:.4f}   (lower is better)")
     print(f"  resolution       {d.resolution:.4f}   (higher is better)")
     print(f"  ECE eq-width/10  {e.equal_width.value:.4f}   eq-mass/10 {e.equal_mass.value:.4f}")
+    print(f"  CORP  MCB {c.mcb:.4f}  DSC {c.dsc:.4f}  UNC {c.unc:.4f}   (bin-free; residual {c.residual:.1e})")
     print(f"  distinct values  {h.distinct_values}   sd {statistics.pstdev(ps):.4f}")
     print(f"  BSS vs base rate {1 - d.score / d.uncertainty:+.1%}  [diagnostic, not comparable across corpora]")
     return d

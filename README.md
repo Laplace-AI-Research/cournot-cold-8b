@@ -117,6 +117,34 @@ so a real difficulty-adjusted comparison exists.
 
 ---
 
+### Calibration without a binning choice
+
+Expected calibration error depends on a binning scheme, and **neither available
+scheme is defensible**: equal-width leaves most bins too sparse to estimate a
+frequency on a skewed question set, and equal-mass has edges that move between
+checkpoints, so two models get scored against different boundaries. We have been
+publishing **both** numbers (0.0233 and 0.0260 here) because we could not choose.
+
+**CORP removes the choice.** The reliability curve is the isotonic (PAV) fit, so
+there are no bins at all:
+
+| | value |
+|---|---:|
+| **MCB** — miscalibration ↓ | **0.0095** |
+| **DSC** — discrimination ↑ | **0.0702** |
+| UNC — uncertainty (a property of the split) | 0.2500 |
+
+`score = MCB − DSC + UNC` holds **exactly**, with a residual of zero. The binned
+Murphy decomposition carries a residual that depends on the scheme; this does
+not.
+
+Method: Dimitriadis, Gneiting & Jordan, *Stable reliability diagrams for
+probabilistic classifiers*, PNAS 2021 ([arXiv:2008.03033](https://arxiv.org/abs/2008.03033)).
+Recomputed from the shipped forecasts by `verify.py`; the ECE pair is retained
+above for continuity with earlier versions of this card.
+
+---
+
 ## Contamination
 
 **Zero of the 3,000 dev questions and zero of the 277 published questions
