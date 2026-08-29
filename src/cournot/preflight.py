@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Preconditions for long-running unattended jobs.
 
 Two jobs died on `OSError: [Errno 28] No space left on device` on 2026-08-20 —

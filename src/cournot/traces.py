@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Select SFT traces, including the wrong ones that have to be kept.
 
 `docs/04` states the rule and the reason:

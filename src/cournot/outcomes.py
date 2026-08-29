@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Counters that cannot conflate a transport failure with a content result.
 
 Twice a rate limit has been recorded as a property of the thing being measured:

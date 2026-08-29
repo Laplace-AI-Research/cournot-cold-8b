@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Scoring metrics for Cournot.
 
 `docs/07`. The shapes here encode two non-negotiables from `CLAUDE.md`:

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Core types for Cournot.
 
 These types are the enforcement point for the conventions in `CLAUDE.md`:

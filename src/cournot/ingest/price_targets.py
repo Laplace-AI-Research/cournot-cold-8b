@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Supervision points from a price series, in the shape the internal decisions log decided.
 
 For a forecast at `as_of`, the target is the price at

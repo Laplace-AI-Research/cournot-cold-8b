@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Where the series comes from, and how it becomes evidence.
 
 Two jobs kept apart on purpose.

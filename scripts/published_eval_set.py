@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Build `published` eval set from the refresh artifacts. The only source of an external number.
 
     uv run python scripts/published_eval_set.py --out data/published_eval.json

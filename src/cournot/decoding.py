@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Reading a probability out of a token distribution, by expectation not argmax.
 
 ## Why this module exists

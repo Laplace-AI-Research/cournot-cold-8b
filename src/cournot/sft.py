@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Assemble SFT training examples, choosing what each one is trained against.
 
 `docs/04` names the overconfidence trap as this stage's dominant failure:

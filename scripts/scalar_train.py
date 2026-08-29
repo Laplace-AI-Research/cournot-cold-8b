@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Train a scalar probability head under Brier loss. `docs/14`, Phase 2's stage.
 
     uv run python scripts/scalar_train.py --corpus data/sft_corpus_v4.jsonl \

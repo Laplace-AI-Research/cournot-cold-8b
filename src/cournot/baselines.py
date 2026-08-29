@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """The `docs/07` baselines. "Report against all four, always."
 
 | baseline | here |

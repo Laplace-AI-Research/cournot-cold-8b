@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Run manifests. `docs/07`: an eval number without one is not citable.
 
     manifest = build_manifest(

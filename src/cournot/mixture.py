@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Assemble the SFT question pool at a stated synthetic share.
 
 The mixture ratio was adopted 2026-08-22 as a **gated sweep** — 0 / 25 / 50 /

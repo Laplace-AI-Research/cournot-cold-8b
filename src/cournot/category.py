@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """A title-only category classifier, and the honesty it requires.
 
     model = NaiveBayesCategoriser.fit(examples)

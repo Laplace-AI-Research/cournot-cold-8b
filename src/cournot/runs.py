@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Reading forecast run files.
 
 A run file is one JSON object per line, written by `scripts/vllm_score.py` and

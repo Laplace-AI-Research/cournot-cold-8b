@@ -1,3 +1,23 @@
+SCOPE — THIS FILE COVERS DATA, NOT CODE
+=======================================
+
+This repository is licensed in two parts:
+
+  * CODE  -- everything under src/ and scripts/, plus verify.py --  is licensed
+    Apache-2.0. See LICENSE-CODE. That is a permissive licence and it permits
+    commercial use.
+
+  * DATA AND WEIGHTS -- the LoRA adapter, the forecasts, and the evaluation
+    metadata -- are licensed CC BY-NC 4.0 by THIS file, below. Non-commercial
+    only, because they derive from a corpus whose source restricts commercial
+    use.
+
+The split is deliberate. The code contains no third-party rights and can be
+permissive; the data-derived artifacts cannot. Question text is not
+redistributed here at all and is not ours to license under either.
+
+--------------------------------------------------------------------------------
+
 Cournot-Cold 8B — licence
 ==========================
 

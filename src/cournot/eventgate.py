@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """The event-partition gate for the synthetic/real mixture sweep.
 
 `docs/13` states the constraint the mixture ratio is bounded by:

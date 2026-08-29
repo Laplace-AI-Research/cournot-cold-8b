@@ -429,6 +429,27 @@ regenerated forecasts, and `verify.py`.
 
 ---
 
+## Licensing, in two parts
+
+| what | licence | commercial use |
+|---|---|---|
+| **code** — `src/`, `scripts/`, `verify.py` | **Apache-2.0** (`LICENSE-CODE`) | **permitted** |
+| adapter weights | CC BY-NC 4.0 (`LICENSE`) | not permitted |
+| forecasts | CC BY-NC 4.0 (`LICENSE`) | not permitted |
+| eval metadata — ids, dates, outcomes | CC BY-NC 4.0 (`LICENSE`) | not permitted |
+| question text | **not redistributed here** | not ours to license |
+| base model | Apache-2.0, by its authors | unaffected |
+
+**The split is deliberate.** The evaluation code contains no third-party rights
+and is permissively licensed, including for commercial use. The data-derived
+artifacts cannot be, because the corpus they come from restricts it.
+
+**Corrected 2026-08-29:** an earlier version of this repository shipped the code
+with **no licence grant at all**, which under copyright means all rights reserved
+— published, but not usable by anyone. That was not intended and is fixed here.
+
+---
+
 ## Training data provenance and licensing
 
 The corpus is derived from the Manifold Markets public API.

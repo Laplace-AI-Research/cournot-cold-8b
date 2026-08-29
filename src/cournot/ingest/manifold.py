@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Manifold ingestion: normalized corpus rows to `QuestionRecord`, every drop counted.
 
 Source choice is argued in the internal decisions log (2026-08-14). Short version:

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Corpus ingestion.
 
 One module per source. Each returns records plus a counted, categorized

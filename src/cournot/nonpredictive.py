@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Marking Manifold markets that are not forecasting questions.
 
 Manifold users tag their own markets, and some of those tags say plainly that the

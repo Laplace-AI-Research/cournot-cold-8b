@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Confidence intervals for eval metrics, by paired question-clustered bootstrap.
 
 `docs/07` mandates a decomposed Brier, ECE under two binning schemes, a clipped

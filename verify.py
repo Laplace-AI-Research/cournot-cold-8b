@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Recompute every headline number in README.md from the shipped forecasts.
 
     uv run python verify.py

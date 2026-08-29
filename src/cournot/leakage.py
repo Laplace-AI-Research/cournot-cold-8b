@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """The leakage detector.
 
 `docs/01`: "The single most important component in the repo. Build and test it

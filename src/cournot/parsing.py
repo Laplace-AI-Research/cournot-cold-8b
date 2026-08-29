@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Parsing the rigid output format, and measuring compliance with it.
 
 `CLAUDE.md` fixes the format and calls it non-negotiable:

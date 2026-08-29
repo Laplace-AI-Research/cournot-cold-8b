@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Isotonic calibration maps, and the cross-fitted debiaser for price targets.
 
 `docs/06` describes this machinery pointed at the model. This module points it at

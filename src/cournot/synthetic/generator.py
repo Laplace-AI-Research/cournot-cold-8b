@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Generate threshold-over-series questions with contemporaneous evidence.
 
 `docs/13`. The Likelihood training source, because the real-market corpus cannot

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Force every load-bearing field to carry a declared external invariant.
 
 The forcing half of `docs/11` rule 3. Rule 3 has fired three times, and its fires

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """The temporal split, and the guard that keeps dev numbers out of model cards.
 
 `docs/01` "Temporal split", `docs/07`, and the freeze-date entry in

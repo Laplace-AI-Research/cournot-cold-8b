@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """The eval runner: forecaster in, scoreable slice out.
 
     result = run_eval(forecaster, records, as_ofs=as_ofs, label="prior-v1")

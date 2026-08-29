@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Score an existing scalar-head adapter on an eval set.
 
     uv run python scripts/scalar_score.py --adapter runs_sft/adapter_tfull \

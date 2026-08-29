@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Score an eval slice per group — by category, by mechanism, by anything.
 
 Three documents require this and none of it existed. `docs/07` asks for

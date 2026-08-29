@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Cournot — a conditional probability estimator.
 
 Phase 1 surface: types, the leakage detector, and metrics. Per `CLAUDE.md`

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Reliability diagrams as self-contained SVG. `docs/07`: "Publish these."
 
     svg = reliability_diagram(ece.equal_mass, title="Cournot-Cold 8B — published")
