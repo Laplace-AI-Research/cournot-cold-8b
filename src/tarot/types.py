@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Core types for Cournot.
+"""Core types for Tarot.
 
 These types are the enforcement point for the conventions in `CLAUDE.md`:
 
@@ -30,7 +30,7 @@ from pydantic import (
     model_validator,
 )
 
-from cournot.nonpredictive import Confidence
+from tarot.nonpredictive import Confidence
 
 __all__ = [
     "EvidenceDoc",
@@ -285,7 +285,7 @@ class QuestionRecord(_Frozen):
     error the 2026-08-20 corpus figure made before it was corrected.
 
     Carried on the record rather than applied to the corpus so that filtering is
-    a choice each artifact declares (`cournot.nonpredictive.filter_nonpredictive`)
+    a choice each artifact declares (`tarot.nonpredictive.filter_nonpredictive`)
     rather than a decision baked into the data. Training wants these questions;
     a published evaluation does not; a comparison between subsets must drop them
     or repeat the confound that inflated the 2026-08-22 mechanism result."""
@@ -401,7 +401,7 @@ class ForecastRequest(_Frozen):
     its scheduled date, so `as_of > scheduled_resolve_date` is an ordinary
     forecast on a slipped question, not an error. The check that matters is
     `as_of` against the record's `resolved_at`, and that lives in
-    `cournot.leakage.check_forecast_time` — a request cannot carry `resolved_at`,
+    `tarot.leakage.check_forecast_time` — a request cannot carry `resolved_at`,
     because the actual resolution time is exactly the thing the model must not
     see.
     """

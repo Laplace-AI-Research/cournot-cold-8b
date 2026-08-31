@@ -146,7 +146,7 @@ def compliance_rate(results: list[ParseResult]) -> float:
 def render_forecast(reasoning: str, probability: float) -> str:
     """Render a forecast in the format `parse_forecast` accepts.
 
-    Rendering lives beside parsing deliberately. `cournot.heads`-style callers --
+    Rendering lives beside parsing deliberately. `tarot.heads`-style callers --
     the scalar head in `scripts/scalar_train.py` is the first -- produce a float
     and no text, but every scorer in this repo reads a `<probability>` tag. If
     each such caller wrote its own string, the scalar arm would be scored by a

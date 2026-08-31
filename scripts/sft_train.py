@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""LoRA SFT for Cournot-Cold 8B, run on a Runpod pod that tears itself down.
+"""LoRA SFT for Tarot-Draw 8B, run on a Runpod pod that tears itself down.
 
     uv run python scripts/sft_train.py --corpus data/sft_corpus.jsonl --out runs_sft/arm0
 
@@ -46,7 +46,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from types import FrameType
 
-from cournot.sft import check_extreme_share
+from tarot.sft import check_extreme_share
 
 PROMPT = """You are a careful forecaster. Estimate the probability that the question \
 below resolves YES.

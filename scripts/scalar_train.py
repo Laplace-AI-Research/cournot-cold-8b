@@ -51,7 +51,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from sft_train import PROMPT, install_teardown, load_corpus
 
-from cournot.parsing import render_forecast
+from tarot.parsing import render_forecast
 
 #: Targets are probabilities. A 0 or 1 is legal under a proper scoring rule --
 #: unlike text SFT, where it is a string to emit (`docs/04`) -- but it is still
@@ -60,7 +60,7 @@ from cournot.parsing import render_forecast
 EXTREME = 1e-6
 
 #: What the scalar head writes in place of a rationale. The number comes from
-#: the head; `cournot.parsing.render_forecast` owns the shape, so the scalar arm is
+#: the head; `tarot.parsing.render_forecast` owns the shape, so the scalar arm is
 #: scored by the same contract implementation as every text arm.
 SCALAR_REASONING = "scalar head"
 
@@ -168,7 +168,7 @@ def run(args) -> int:
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
     # Extreme targets are LEGAL here and illegal in text SFT -- see
-    # `cournot.sft.check_extreme_share`. The terminal arm is the high-variance half
+    # `tarot.sft.check_extreme_share`. The terminal arm is the high-variance half
     # of the comparison this stage exists to run, so refusing it would refuse
     # the experiment.
     torch.manual_seed(args.seed)

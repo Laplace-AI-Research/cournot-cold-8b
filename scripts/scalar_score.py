@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from scalar_train import SCALAR_REASONING, build_texts
 
-from cournot.parsing import render_forecast
+from tarot.parsing import render_forecast
 
 
 def main(argv: Sequence[str] | None = None) -> int:

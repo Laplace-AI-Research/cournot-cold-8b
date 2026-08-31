@@ -16,7 +16,7 @@ a `minimum_coverage`, and a caller who wants to score 61% of an eval has to
 write the number down.
 
 **A crashed call and a malformed answer are different things** and are counted
-separately, by `cournot.outcomes`, which exists because this repo counted Mistral's
+separately, by `tarot.outcomes`, which exists because this repo counted Mistral's
 rate limits as format failures once already. A 429 says nothing about a model's
 compliance; a `<probability>37%</probability>` says a great deal.
 """
@@ -28,10 +28,10 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from cournot.outcomes import OutcomeTally
-from cournot.parsing import FormatFailure, parse_forecast
-from cournot.splits import EvalSlice
-from cournot.types import QuestionRecord
+from tarot.outcomes import OutcomeTally
+from tarot.parsing import FormatFailure, parse_forecast
+from tarot.splits import EvalSlice
+from tarot.types import QuestionRecord
 
 __all__ = ["EvalRunResult", "InsufficientCoverageError", "run_eval"]
 

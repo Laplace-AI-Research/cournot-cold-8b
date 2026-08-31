@@ -9,7 +9,7 @@ pooled number cannot show the failure the mixture sweep exists to catch — an a
 that improves aggregate Brier while going flat or worse on event-driven
 questions.
 
-`cournot.eventgate` decides whether that happened. This shows *how*.
+`tarot.eventgate` decides whether that happened. This shows *how*.
 
 ## Small groups are reported, not dropped
 
@@ -37,8 +37,8 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 
-from cournot.metrics import DEFAULT_BINNING, Binning, BrierDecomposition, brier
-from cournot.types import Outcome, QuestionRecord
+from tarot.metrics import DEFAULT_BINNING, Binning, BrierDecomposition, brier
+from tarot.types import Outcome, QuestionRecord
 
 
 @dataclass(frozen=True)

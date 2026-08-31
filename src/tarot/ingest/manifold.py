@@ -35,7 +35,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from cournot.types import QuestionRecord, SoftTargetProvenance
+from tarot.types import QuestionRecord, SoftTargetProvenance
 
 __all__ = [
     "SOURCE",

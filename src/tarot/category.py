@@ -5,7 +5,7 @@
     model.predict("Will the Fed cut rates in June?")
 
 Multinomial naive Bayes over lowercased word tokens, pure Python and no
-dependencies, matching `cournot.metrics` — these are corpus-sized fits, not a
+dependencies, matching `tarot.metrics` — these are corpus-sized fits, not a
 training run, and a readable model is worth more than speed. It is also the
 right *shape* of model for this job: the point is a measured accuracy number for
 `docs/12`, and a baseline whose failures are legible beats a stronger one whose

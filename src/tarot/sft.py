@@ -24,7 +24,7 @@ terminal outcome, and refuses to let that share be settled by accident.
 `soft_fraction` has no default. It is capped by **coverage**: a soft target
 exists only where a question has a usable supervision point, and asking for 60%
 soft when 40% of questions have one is not a rounding problem — it is a
-different corpus from the one requested. Same discipline as `cournot.mixture`,
+different corpus from the one requested. Same discipline as `tarot.mixture`,
 where an early version silently returned 0.833 for a requested 0.900.
 
 ## Provenance travels with the target
@@ -44,7 +44,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Protocol
 
-from cournot.types import Outcome, SoftTargetProvenance
+from tarot.types import Outcome, SoftTargetProvenance
 
 
 class TargetKind(StrEnum):

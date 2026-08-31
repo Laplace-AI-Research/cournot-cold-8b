@@ -26,8 +26,8 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 
-from cournot.splits import DEFAULT_SPLIT, TemporalSplit
-from cournot.types import QuestionRecord
+from tarot.splits import DEFAULT_SPLIT, TemporalSplit
+from tarot.types import QuestionRecord
 
 __all__ = [
     "ALWAYS_HALF_BRIER",

@@ -56,7 +56,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Generic, Protocol, TypeVar
 
-from cournot.types import Outcome
+from tarot.types import Outcome
 
 
 class TraceClass(StrEnum):

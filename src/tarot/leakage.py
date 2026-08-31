@@ -38,7 +38,7 @@ from difflib import SequenceMatcher
 from enum import IntEnum, StrEnum
 from typing import Protocol
 
-from cournot.types import (
+from tarot.types import (
     EvidenceDoc,
     ForecastRequest,
     ForecastResponse,
