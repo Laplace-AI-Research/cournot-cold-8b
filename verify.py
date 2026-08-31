@@ -44,20 +44,39 @@ if __name__ == "__main__":
     pub = report("PUBLISHED (headline, contamination-free)", "eval/published_eval.json", "forecasts/published.jsonl")
     report("DEV (iteration only)", "eval/bakeoff_3000.json", "forecasts/scalar_tfull.jsonl")
     print("\nTRANSFER — a different venue, matched question shape (README: Transfer)")
-    kq = {q["question_id"]: q for q in json.load(open("eval/kalshi_score_778.json", encoding="utf-8"))["questions"]}
-    kf = load("forecasts/kalshi_transfer.jsonl")
+    # Transfer, on the rebuilt Kalshi set. The set this replaced had no builder
+    # anywhere and could not be independently reconstructed; this one is built by
+    # scripts/kalshi_eval_set.py + kalshi_subtitles.py + kalshi_rebuild_prompts.py,
+    # and those scripts reproduce all 157 prompts shared with the old set exactly.
+    kq = {q["question_id"]: q for q in json.load(open("eval/kalshi_transfer_v2.json", encoding="utf-8"))["questions"]}
+    kf = load("forecasts/kalshi_transfer_v2.jsonl")
     kids = [k for k in kq if k in kf]
-    for label, sel in (("Kalshi, all", lambda q: True),
-                       ("  Politics (best stratum)", lambda q: q["category"] == "Politics"),
-                       ("  Elections (worst stratum)", lambda q: q["category"] == "Elections")):
+    FREEZE = "2026-08-15T00:00:00+00:00"
+    rows = [
+        ("Kalshi, all", lambda q: True),
+        ("  Politics", lambda q: q["category"] == "Politics"),
+        ("  Entertainment", lambda q: q["category"] == "Entertainment"),
+        ("  Science and Technology", lambda q: q["category"] == "Science and Technology"),
+        ("  Economics", lambda q: q["category"] == "Economics"),
+        ("  Elections", lambda q: q["category"] == "Elections"),
+        ("  post-freeze (clean)", lambda q: q["resolved_at"] > FREEZE),
+        ("  pre-freeze (exposed)", lambda q: q["resolved_at"] <= FREEZE),
+        ("  Elections, post-freeze", lambda q: q["category"] == "Elections" and q["resolved_at"] > FREEZE),
+        ("  Elections, pre-freeze", lambda q: q["category"] == "Elections" and q["resolved_at"] <= FREEZE),
+    ]
+    for label, sel in rows:
         ids = [k for k in kids if sel(kq[k])]
         ys = [kq[k]["outcome"] for k in ids]
-        if len(set(ys)) < 2:
+        if len(ids) < 2 or len(set(ys)) < 2:
             continue
         d = brier([kf[k] for k in ids], ys)
-        print(f"  {label:<28} n={len(ids):>4}  Brier {d.score:.4f}  resolution {d.resolution:.4f}"
-              f"  BSS {1 - d.score / d.uncertainty:+.1%}")
-    print("  Manifold home venue          n=3000  Brier 0.1674  resolution 0.0718  BSS +30.1%")
-    print("  -> Politics discriminates BETTER off-venue than at home. Elections collapses:")
-    print("     those questions name obscure local candidates, which is a lookup, not a forecast.")
+        bss = 1 - d.score / d.uncertainty
+        mark = "   <-- worse than a constant" if bss < 0 else ""
+        print(f"  {label:<26} n={len(ids):>4}  Brier {d.score:.4f}  resolution {d.resolution:.4f}"
+              f"  BSS {bss:+.1%}{mark}")
+    print("  Manifold home venue        n=3000  Brier 0.1674  resolution 0.0718  BSS +30.1%")
+    print("  -> Elections is worse than a constant on BOTH sides of the freeze, so it is")
+    print("     a subject-matter limit, not contamination. Those questions name obscure")
+    print("     local candidates, which is a lookup rather than a forecast.")
+
     print(f"\nHeadline for the card: Brier {pub.score:.4f}, calibration {pub.calibration:.4f}, resolution {pub.resolution:.4f}")
