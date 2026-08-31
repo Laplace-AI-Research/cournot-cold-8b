@@ -48,7 +48,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import StrEnum
 
-from cournot.types import Outcome
+from tarot.types import Outcome
 
 #: Two-sided 95%.
 DEFAULT_Z = 1.96

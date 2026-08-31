@@ -190,7 +190,7 @@ def filter_nonpredictive(records: Sequence[R], *, policy: DropPolicy) -> FilterR
     `policy` is keyword-only and has no default, on purpose. Whoever builds an
     artifact from this corpus states what they excluded, and it appears in their
     code rather than in a footnote — the same discipline
-    `cournot.evalrun.scored_slice` applies to coverage.
+    `tarot.evalrun.scored_slice` applies to coverage.
     """
     drop = _DROPS[policy]
 

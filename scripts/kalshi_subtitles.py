@@ -18,7 +18,7 @@ can be argued about; a prompt that cannot be reconstructed means nobody can
 recover what the model was actually shown.
 
 Resumable, rate-limited, and a 404 is recorded as a transport outcome rather
-than an empty subtitle -- `cournot.outcomes` exists because this project has
+than an empty subtitle -- `tarot.outcomes` exists because this project has
 three times counted a failed request as a content result.
 """
 
@@ -32,7 +32,7 @@ import time
 from collections.abc import Sequence
 
 API = "https://api.elections.kalshi.com/trade-api/v2/markets/"
-UA = "Laplace-Research/cournot (non-commercial research eval split)"
+UA = "Laplace-Research/tarot (non-commercial research eval split)"
 
 
 def main(argv: Sequence[str] | None = None) -> int:

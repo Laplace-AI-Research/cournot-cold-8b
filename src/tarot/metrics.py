@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Scoring metrics for Cournot.
+"""Scoring metrics for Tarot.
 
 `docs/07`. The shapes here encode two non-negotiables from `CLAUDE.md`:
 

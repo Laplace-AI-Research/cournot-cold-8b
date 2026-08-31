@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import StrEnum
 
-from cournot.types import PricePoint, Probability, SoftTargetProvenance
+from tarot.types import PricePoint, Probability, SoftTargetProvenance
 
 __all__ = [
     "DEFAULT_LAMBDA",

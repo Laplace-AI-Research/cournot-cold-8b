@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Cournot — a conditional probability estimator.
+"""Tarot — a conditional probability estimator.
 
 Phase 1 surface: types, the leakage detector, and metrics. Per `CLAUDE.md`
 build order, no data loaders, model code, or training code exist yet.
 """
 
-from cournot.types import (
+from tarot.types import (
     EvidenceDoc,
     ForecastRequest,
     ForecastResponse,

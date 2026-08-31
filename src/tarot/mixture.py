@@ -2,7 +2,7 @@
 """Assemble the SFT question pool at a stated synthetic share.
 
 The mixture ratio was adopted 2026-08-22 as a **gated sweep** — 0 / 25 / 50 /
-74.1% synthetic, each arm gated on the event partition (`cournot.eventgate`), taking
+74.1% synthetic, each arm gated on the event partition (`tarot.eventgate`), taking
 the highest ratio that does not degrade it. This module builds one arm's pool.
 
 ## Arms must be the same size, or the sweep measures two things at once
@@ -57,7 +57,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Generic, TypeVar
 
-from cournot.nonpredictive import DropPolicy, HasNonPredictiveFlag, filter_nonpredictive
+from tarot.nonpredictive import DropPolicy, HasNonPredictiveFlag, filter_nonpredictive
 
 R = TypeVar("R", bound=HasNonPredictiveFlag)
 S = TypeVar("S")
@@ -128,7 +128,7 @@ def assemble(
     """Build one arm's pool at exactly `synthetic_share`.
 
     Both keyword arguments are required and have no default. `drop_policy` in
-    particular: `cournot.nonpredictive` refuses to guess what a caller wants
+    particular: `tarot.nonpredictive` refuses to guess what a caller wants
     excluded, and an assembled training corpus is precisely where that silence
     would be costly.
 

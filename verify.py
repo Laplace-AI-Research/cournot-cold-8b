@@ -3,13 +3,13 @@
 
     uv run python verify.py
 
-Requires only `src/cournot` — no model, no GPU. If a number here disagrees with the
+Requires only `src/tarot` — no model, no GPU. If a number here disagrees with the
 model card, the model card is wrong.
 """
 from __future__ import annotations
 import json, statistics, sys, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "src"))
-from cournot.metrics import brier, corp, ece, output_histogram
+from tarot.metrics import brier, corp, ece, output_histogram
 
 def load(p):
     out = {}
@@ -40,7 +40,7 @@ def report(label, eval_path, run_path):
     return d
 
 if __name__ == "__main__":
-    print("Cournot-Cold 8B — verifying the model card's numbers")
+    print("Tarot-Draw 8B — verifying the model card's numbers")
     pub = report("PUBLISHED (headline, contamination-free)", "eval/published_eval.json", "forecasts/published.jsonl")
     report("DEV (iteration only)", "eval/bakeoff_3000.json", "forecasts/scalar_tfull.jsonl")
     print("\nTRANSFER — a different venue, matched question shape (README: Transfer)")

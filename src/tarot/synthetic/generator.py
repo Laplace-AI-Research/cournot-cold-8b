@@ -29,7 +29,7 @@ from datetime import datetime, timedelta
 from enum import StrEnum
 from itertools import pairwise
 
-from cournot.types import Probability
+from tarot.types import Probability
 
 __all__ = [
     "LookAheadError",

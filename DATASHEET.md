@@ -1,4 +1,4 @@
-# Datasheet — Cournot-Cold 8B training and evaluation corpora
+# Datasheet — Tarot-Draw 8B training and evaluation corpora
 
 Follows Gebru et al., *Datasheets for Datasets* (arXiv:1803.09010). Published in
 place of the raw corpus, which is **not redistributed** — see Distribution.
@@ -68,7 +68,7 @@ cutoff is not.
 
 ## Uses
 
-Used to train and evaluate Cournot-Cold 8B. Not suitable for: studying Manifold
+Used to train and evaluate Tarot-Draw 8B. Not suitable for: studying Manifold
 users or trading behaviour (no user data retained); any claim about venues other
 than Manifold (transfer fails — see the model card); mechanical threshold or
 counting questions.

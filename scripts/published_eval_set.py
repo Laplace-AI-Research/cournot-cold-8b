@@ -41,7 +41,7 @@ from typing import Any
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
-from cournot.splits import FREEZE
+from tarot.splits import FREEZE
 
 
 def _iso(ms: float) -> str:

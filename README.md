@@ -16,11 +16,11 @@ tags:
   - peft
   - qwen3
 model-index:
-  - name: cournot-cold-8b
+  - name: tarot-draw-8b
     results:
       - task: {type: forecasting, name: Binary event forecasting}
         dataset:
-          name: Cournot published split (Manifold, resolved after 2026-08-15 freeze)
+          name: Tarot published split (Manifold, resolved after 2026-08-15 freeze)
           type: manifold-published
         metrics:
           - {type: brier, value: 0.1893, name: Brier score}
@@ -29,7 +29,7 @@ model-index:
           - {type: ece, value: 0.0558, name: ECE (equal-width, 10 bins)}
 ---
 
-# Cournot-Cold 8B
+# Tarot-Draw 8B
 
 A **calibrated probability estimator** for binary questions about future events.
 Given a question, its resolution criteria, its scheduled resolution date and an
@@ -38,12 +38,12 @@ text alone** — no retrieval, no news, no market price.
 
 LoRA adapter + scalar regression head on `Qwen/Qwen3-8B`.
 
-![Cournot-Cold 8B architecture](assets/architecture.svg)
+![Tarot-Draw 8B architecture](assets/architecture.svg)
 
-**Weights:** [`Laplace-AI-Research/cournot-cold-8b`](https://huggingface.co/Laplace-AI-Research/cournot-cold-8b)
+**Weights:** [`Laplace-AI-Research/tarot-draw-8b`](https://huggingface.co/Laplace-AI-Research/tarot-draw-8b)
 on the Hugging Face Hub — LoRA adapter, 349 MB.
-**Smaller siblings:** [`Cournot-Cold 4B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-4b)
-and [`Cournot-Cold 1.7B`](https://huggingface.co/Laplace-AI-Research/cournot-cold-1-7b).
+**Smaller siblings:** [`Tarot-Draw 4B`](https://huggingface.co/Laplace-AI-Research/tarot-draw-4b)
+and [`Tarot-Draw 1.7B`](https://huggingface.co/Laplace-AI-Research/tarot-draw-1-7b).
 The 1.7B is measurably worse — +0.0119 Brier [+0.0080, +0.0158] against the 4B on
 dev — and exists for the case where neither of the larger two will fit. Its card
 carries a **training-variance** measurement that applies to this model too: two
@@ -58,7 +58,7 @@ dev (n=3,000, Brier delta +0.0010 [−0.0020, +0.0040]), the published split
 seeds. Its transfer results are now measured on that model rather than inherited
 from this one. **Take the 4B** — half the base model, fits a 16 GB card, and on
 accuracy they are the same model.
-**Evidence:** [`Laplace-AI-Research/cournot-cold-8b`](https://github.com/Laplace-AI-Research/cournot-cold-8b)
+**Evidence:** [`Laplace-AI-Research/tarot-draw-8b`](https://github.com/Laplace-AI-Research/tarot-draw-8b)
 on GitHub — the eval splits behind every claim, this model's raw forecasts
 (including the venue transfers where it *failed*), the metric code, and
 `verify.py`, which recomputes every number below without a model or a GPU.
@@ -513,7 +513,7 @@ To regenerate those forecasts from the weights instead:
 
 ```bash
 uv run python scripts/scalar_score.py \
-  --adapter Laplace-AI-Research/cournot-cold-8b \
+  --adapter Laplace-AI-Research/tarot-draw-8b \
   --set eval/published_eval.json \
   --out published.jsonl \
   --chat-template
